@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:health_care_application/screens/new_member_screen.dart';
 import './screens/home_screen.dart';
 import './widgets/drawer.dart';
 import './screens/tabs_screen.dart';
+import './screens/new_member_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -27,7 +29,8 @@ class MyApp extends StatelessWidget {
                   fontWeight: FontWeight.bold))),
       home:  HomeScreen(),
       routes: {
-        TabsScreen.routeName : (ctx) => TabsScreen()
+        TabsScreen.routeName : (ctx) => TabsScreen(),
+        NewMemberScreen.routeName : (ctx) => NewMemberScreen()
       },
       
     );

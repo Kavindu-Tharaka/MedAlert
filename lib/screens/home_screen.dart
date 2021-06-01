@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../widgets/drawer.dart';
 import './tabs_screen.dart';
+import './new_member_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -41,11 +42,11 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           Row(
-            children: <Widget>[
-              Text("Kavindu's Part Here")
-            ],
+            children: <Widget>[Text("Kavindu's Part Here")],
           ),
-          SizedBox(height: 50,),
+          SizedBox(
+            height: 50,
+          ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(
@@ -55,22 +56,47 @@ class _HomeScreenState extends State<HomeScreen> {
                 Divider(
                   thickness: 2,
                 ),
-                InkWell(
-                  onTap: () =>  Navigator.of(context).pushNamed(TabsScreen.routeName),
-                  child: Column(
-                    children: <Widget>[
-                      CircleAvatar(
-                        radius: 30,
-                        backgroundColor: Colors.white,
-                        child: Image.asset('assets\\images\\jona.png'),
+                Row(
+                  children: <Widget>[
+                    InkWell(
+                      onTap: () =>
+                          Navigator.of(context).pushNamed(TabsScreen.routeName),
+                      child: Column(
+                        children: <Widget>[
+                          CircleAvatar(
+                            radius: 30,
+                            backgroundColor: Colors.white,
+                            child: Image.asset('assets\\images\\jona.png'),
+                          ),
+                          Text(
+                            "Ashely Doe",
+                            style: TextStyle(fontSize: 10),
+                          )
+                        ],
                       ),
-                      Text(
-                        "Ashely Doe",
-                        style: TextStyle(fontSize: 10),
-                      )
-                    ],
-                  ),
-                ),
+                    ),
+                    SizedBox(
+                      width: 25,
+                    ),
+                    InkWell(
+                      onTap: () =>
+                          Navigator.of(context).pushNamed(NewMemberScreen.routeName),
+                      child: Column(
+                        children: <Widget>[
+                          CircleAvatar(
+                            radius: 30,
+                            backgroundColor: Colors.white,
+                            child: Icon(Icons.add),
+                          ),
+                          Text(
+                            "New Member",
+                            style: TextStyle(fontSize: 10),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                )
               ],
             ),
           )
