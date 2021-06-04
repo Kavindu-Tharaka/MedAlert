@@ -1,9 +1,14 @@
+import 'package:MedAlert/widgets/member.dart';
+import 'package:MedAlert/widgets/member_list.dart';
 import 'package:flutter/material.dart';
 import '../widgets/drawer.dart';
 import './tabs_screen.dart';
 import './new_member_screen.dart';
 
 class HomeScreen extends StatefulWidget {
+
+   static final routeName = '/home';
+
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -16,6 +21,13 @@ class _HomeScreenState extends State<HomeScreen> {
         title: Text("Test 1"),
       ),
       drawer: AppDrawer(),
+      floatingActionButton:  FloatingActionButton(
+        onPressed: () {
+           Navigator.of(context).pushNamed(NewMemberScreen.routeName);
+        },
+        child: const Icon(Icons.navigation),
+        backgroundColor: Colors.green,
+      ),
       body: (Column(
         children: <Widget>[
           Container(
@@ -49,57 +61,20 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text('Members'),
-                Divider(
-                  thickness: 2,
-                ),
-                Row(
-                  children: <Widget>[
-                    InkWell(
-                      onTap: () =>
-                          Navigator.of(context).pushNamed(TabsScreen.routeName),
-                      child: Column(
-                        children: <Widget>[
-                          CircleAvatar(
-                            radius: 30,
-                            backgroundColor: Colors.white,
-                            child: Image.asset('assets\\images\\jona.png'),
-                          ),
-                          Text(
-                            "Ashely Doe",
-                            style: TextStyle(fontSize: 10),
-                          )
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      width: 25,
-                    ),
-                    InkWell(
-                      onTap: () =>
-                          Navigator.of(context).pushNamed(NewMemberScreen.routeName),
-                      child: Column(
-                        children: <Widget>[
-                          CircleAvatar(
-                            radius: 30,
-                            backgroundColor: Colors.white,
-                            child: Icon(Icons.add),
-                          ),
-                          Text(
-                            "New Member",
-                            style: TextStyle(fontSize: 10),
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
-                )
-              ],
+            child: Container(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text('Members'),
+                  Divider(
+                    thickness: 2,
+                  ),
+                  MemberList(),
+                 
+                ],
+              ),
             ),
-          )
+          ),
         ],
       )),
     );
