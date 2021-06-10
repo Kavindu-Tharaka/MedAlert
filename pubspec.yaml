@@ -29,6 +29,27 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.3
 
+  # database storage
+  sqflite: ^2.0.0+3
+
+  # format DateTime
+  intl: ^0.17.0
+
+  #display available medicine percentage
+  percent_indicator: ^3.0.1
+
+  #random colors
+  colorlizer: ^0.0.4
+
+  #number picker
+  numberpicker: ^2.1.1
+
+  #for notifications
+  flutter_local_notifications: ^6.0.0
+  rxdart: ^0.27.1
+  timezone: ^0.7.0
+  flutter_native_timezone: ^2.0.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

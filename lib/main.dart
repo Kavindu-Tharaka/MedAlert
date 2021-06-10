@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import './screens/home_screen.dart';
-import './widgets/drawer.dart';
 import './screens/tabs_screen.dart';
 
 void main() {
