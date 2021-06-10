@@ -4,7 +4,6 @@ import './diary_screen.dart';
 import './medication_screen.dart';
 import './report_screen.dart';
 
-
 class TabsScreen extends StatefulWidget {
   static const routeName = '/tabs-screen';
   @override
@@ -12,17 +11,15 @@ class TabsScreen extends StatefulWidget {
 }
 
 class _TabsScreenState extends State<TabsScreen> {
-   
- int _selectedIndex = 2;
+  int _selectedIndex = 2;
 
-
- List<Widget> _widgetOptions = <Widget>[
+  List<Widget> _widgetOptions = <Widget>[
     DiaryScreen(),
     MedicationScreen(),
     ReportScreen()
   ];
- 
- void _onItemTapped(int index) {
+
+  void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
@@ -31,14 +28,25 @@ class _TabsScreenState extends State<TabsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Some text"),),
-      drawer: AppDrawer(),
-       body: Center(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios),
+          onPressed: () => Navigator.pop(context),
+        ),
+        actions: [
+          Image.asset(
+            'assets\\images\\MedAlert_Logo.png',
+            height: 20,
+          ),
+        ],
+      ),
+      // drawer: AppDrawer(),
+      body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: Theme(
         data: Theme.of(context).copyWith(
-          canvasColor: Color(0xFF212121),
+          canvasColor: Theme.of(context).primaryColor,
         ),
         child: BottomNavigationBar(
           items: const <BottomNavigationBarItem>[
@@ -54,13 +62,12 @@ class _TabsScreenState extends State<TabsScreen> {
               icon: Icon(Icons.home),
               title: Text('Report'),
             ),
- 
           ],
           currentIndex: _selectedIndex,
           type: BottomNavigationBarType.fixed,
-          selectedItemColor: Color(0xFFfbb418),
-          backgroundColor: Color(0xFF212121),
-          unselectedItemColor: Colors.white,
+          selectedItemColor: Theme.of(context).accentColor,
+          backgroundColor: Theme.of(context).primaryColor,
+          unselectedItemColor: Colors.grey,
           onTap: _onItemTapped,
         ),
       ),
