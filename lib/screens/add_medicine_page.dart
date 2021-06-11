@@ -66,8 +66,8 @@ class MyCustomFormState extends State<MyCustomForm> {
   bool isBefore = false;
   int temp = 1;
 
-  int hourOne = 13;
-  int minuteOne = 30;
+  int hourOne = 19;
+  int minuteOne = 45;
   bool isAllDaysCheckedOne = false;
   bool isMondayCheckedOne = false;
   bool isTuesdayCheckedOne = false;
@@ -78,8 +78,8 @@ class MyCustomFormState extends State<MyCustomForm> {
   bool isSundayCheckedOne = false;
   bool isReminderOneVisible = true;
 
-  int hourTwo = 13;
-  int minuteTwo = 30;
+  int hourTwo = 19;
+  int minuteTwo = 45;
   bool isAllDaysCheckedTwo = false;
   bool isMondayCheckedTwo = false;
   bool isTuesdayCheckedTwo = false;
@@ -90,8 +90,8 @@ class MyCustomFormState extends State<MyCustomForm> {
   bool isSundayCheckedTwo = false;
   bool isReminderTwoVisible = false;
 
-  int hourThree = 13;
-  int minuteThree = 30;
+  int hourThree = 19;
+  int minuteThree = 45;
   bool isAllDaysCheckedThree = false;
   bool isMondayCheckedThree = false;
   bool isTuesdayCheckedThree = false;
@@ -102,8 +102,8 @@ class MyCustomFormState extends State<MyCustomForm> {
   bool isSundayCheckedThree = false;
   bool isReminderThreeVisible = false;
 
-  int hourFour = 13;
-  int minuteFour = 30;
+  int hourFour = 19;
+  int minuteFour = 45;
   bool isAllDaysCheckedFour = false;
   bool isMondayCheckedFour = false;
   bool isTuesdayCheckedFour = false;

@@ -14,26 +14,8 @@ class MedicineUpdatePage extends StatefulWidget {
 }
 
 class _MedicineUpdatePageState extends State<MedicineUpdatePage> {
-  // int id;
-  // String name;
-  // int amount;
-  // int dosageAmount;
-  // String amountUnit;
-  // bool isBefore;
-  // int timesPerDay;
-
   @override
   Widget build(BuildContext context) {
-    // final List args = ModalRoute.of(context).settings.arguments;
-
-    // id = args[0];
-    // name = args[1];
-    // amount = args[2];
-    // dosageAmount = args[3];
-    // amountUnit = args[4];
-    // isBefore = args[5];
-    // timesPerDay = args[6];
-
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -74,14 +56,17 @@ class MyCustomForm extends StatefulWidget {
 
 class MyCustomFormState extends State<MyCustomForm> {
   int id1;
+  List<Reminder> remindersList;
+  Map<String, List<Reminder>> reminderMap = Map<String, List<Reminder>>();
+  List args;
 
   final _formKey = GlobalKey<FormState>();
   int numOfVisibileReminders;
   bool isBefore;
   int temp = 1;
 
-  int hourOne = 13;
-  int minuteOne = 30;
+  int hourOne = 19;
+  int minuteOne = 45;
   bool isAllDaysCheckedOne = false;
   bool isMondayCheckedOne = false;
   bool isTuesdayCheckedOne = false;
@@ -91,9 +76,10 @@ class MyCustomFormState extends State<MyCustomForm> {
   bool isSaturdaydayCheckedOne = false;
   bool isSundayCheckedOne = false;
   bool isReminderOneVisible = true;
+  int reminderIdOne;
 
-  int hourTwo = 13;
-  int minuteTwo = 30;
+  int hourTwo = 19;
+  int minuteTwo = 45;
   bool isAllDaysCheckedTwo = false;
   bool isMondayCheckedTwo = false;
   bool isTuesdayCheckedTwo = false;
@@ -103,9 +89,10 @@ class MyCustomFormState extends State<MyCustomForm> {
   bool isSaturdaydayCheckedTwo = false;
   bool isSundayCheckedTwo = false;
   bool isReminderTwoVisible = false;
+  int reminderIdTwo;
 
-  int hourThree = 13;
-  int minuteThree = 30;
+  int hourThree = 19;
+  int minuteThree = 45;
   bool isAllDaysCheckedThree = false;
   bool isMondayCheckedThree = false;
   bool isTuesdayCheckedThree = false;
@@ -115,9 +102,10 @@ class MyCustomFormState extends State<MyCustomForm> {
   bool isSaturdaydayCheckedThree = false;
   bool isSundayCheckedThree = false;
   bool isReminderThreeVisible = false;
+  int reminderIdThree;
 
-  int hourFour = 13;
-  int minuteFour = 30;
+  int hourFour = 19;
+  int minuteFour = 45;
   bool isAllDaysCheckedFour = false;
   bool isMondayCheckedFour = false;
   bool isTuesdayCheckedFour = false;
@@ -127,6 +115,7 @@ class MyCustomFormState extends State<MyCustomForm> {
   bool isSaturdaydayCheckedFour = false;
   bool isSundayCheckedFour = false;
   bool isReminderFourVisible = false;
+  int reminderIdFour;
 
   TextEditingController medicineNameController = TextEditingController();
   TextEditingController amountUnitController = TextEditingController();
@@ -161,17 +150,17 @@ class MyCustomFormState extends State<MyCustomForm> {
   }
 
   @override
-  void didChangeDependencies() {
-    final List args = ModalRoute.of(context).settings.arguments;
+  void didChangeDependencies() async {
+    args = ModalRoute.of(context).settings.arguments;
 
     id1 = args[0];
-
     medicineNameController.text = args[1];
     amountController.text = args[2].toString();
     dosageAmountController.text = args[3].toString();
     amountUnitController.text = args[4];
     isBefore = args[5];
     numOfVisibileReminders = args[6];
+    remindersList = args[7];
 
     if (numOfVisibileReminders == 1) {
       isReminderOneVisible = true;
@@ -195,6 +184,243 @@ class MyCustomFormState extends State<MyCustomForm> {
       isReminderFourVisible = true;
     }
 
+    remindersList.forEach((element) {
+      print('=======================================================');
+      print('element.id \t\t:  ${element.id}');
+      print('element.medicineId \t:  ${element.medicineId}');
+      print('element.hour \t:  ${element.hour}');
+      print('element.minute \t:  ${element.minute}');
+      print('element.monday \t:  ${element.monday}');
+      print('element.tuesday  \t:  ${element.tuesday}');
+      print('element.wednesday  \t:  ${element.wednesday}');
+      print('element.thursday \t:  ${element.thursday}');
+      print('element.friday \t:  ${element.friday}');
+      print('element.saturday \t:  ${element.saturday}');
+      print('element.sunday \t:  ${element.sunday}');
+      print('element.medicineName :  ${element.medicineName}');
+      print('element.isBefore \t:  ${element.isBefore}');
+      print('=======================================================');
+    });
+
+    if (remindersList.length == 1) {
+      numOfVisibileReminders = 1;
+      hourOne = remindersList[0].hour;
+      minuteOne = remindersList[0].minute;
+      isMondayCheckedOne = remindersList[0].monday;
+      isTuesdayCheckedOne = remindersList[0].tuesday;
+      isWednesdayCheckedOne = remindersList[0].wednesday;
+      isThursdayCheckedOne = remindersList[0].thursday;
+      isFridayCheckedOne = remindersList[0].friday;
+      isSaturdaydayCheckedOne = remindersList[0].saturday;
+      isSundayCheckedOne = remindersList[0].sunday;
+      reminderIdOne = remindersList[0].id;
+
+      isReminderOneVisible = true;
+
+      isAllDaysCheckedOne = isMondayCheckedOne &&
+          isTuesdayCheckedOne &&
+          isWednesdayCheckedOne &&
+          isThursdayCheckedOne &&
+          isFridayCheckedOne &&
+          isSaturdaydayCheckedOne &&
+          isSundayCheckedOne;
+    } else if (remindersList.length == 2) {
+      numOfVisibileReminders = 2;
+
+      hourOne = remindersList[0].hour;
+      minuteOne = remindersList[0].minute;
+      isMondayCheckedOne = remindersList[0].monday;
+      isTuesdayCheckedOne = remindersList[0].tuesday;
+      isWednesdayCheckedOne = remindersList[0].wednesday;
+      isThursdayCheckedOne = remindersList[0].thursday;
+      isFridayCheckedOne = remindersList[0].friday;
+      isSaturdaydayCheckedOne = remindersList[0].saturday;
+      isSundayCheckedOne = remindersList[0].sunday;
+      reminderIdOne = remindersList[0].id;
+
+      isReminderOneVisible = true;
+
+      isAllDaysCheckedOne = isMondayCheckedOne &&
+          isTuesdayCheckedOne &&
+          isWednesdayCheckedOne &&
+          isThursdayCheckedOne &&
+          isFridayCheckedOne &&
+          isSaturdaydayCheckedOne &&
+          isSundayCheckedOne;
+
+      hourTwo = remindersList[1].hour;
+      minuteTwo = remindersList[1].minute;
+      isMondayCheckedTwo = remindersList[1].monday;
+      isTuesdayCheckedTwo = remindersList[1].tuesday;
+      isWednesdayCheckedTwo = remindersList[1].wednesday;
+      isThursdayCheckedTwo = remindersList[1].thursday;
+      isFridayCheckedTwo = remindersList[1].friday;
+      isSaturdaydayCheckedTwo = remindersList[1].saturday;
+      isSundayCheckedTwo = remindersList[1].sunday;
+      reminderIdTwo = remindersList[1].id;
+
+      isReminderTwoVisible = true;
+
+      isAllDaysCheckedTwo = isMondayCheckedTwo &&
+          isTuesdayCheckedTwo &&
+          isWednesdayCheckedTwo &&
+          isThursdayCheckedTwo &&
+          isFridayCheckedTwo &&
+          isSaturdaydayCheckedTwo &&
+          isSundayCheckedTwo;
+    } else if (remindersList.length == 3) {
+      numOfVisibileReminders = 3;
+
+      hourOne = remindersList[0].hour;
+      minuteOne = remindersList[0].minute;
+      isMondayCheckedOne = remindersList[0].monday;
+      isTuesdayCheckedOne = remindersList[0].tuesday;
+      isWednesdayCheckedOne = remindersList[0].wednesday;
+      isThursdayCheckedOne = remindersList[0].thursday;
+      isFridayCheckedOne = remindersList[0].friday;
+      isSaturdaydayCheckedOne = remindersList[0].saturday;
+      isSundayCheckedOne = remindersList[0].sunday;
+      reminderIdOne = remindersList[0].id;
+
+      isReminderOneVisible = true;
+
+      isAllDaysCheckedOne = isMondayCheckedOne &&
+          isTuesdayCheckedOne &&
+          isWednesdayCheckedOne &&
+          isThursdayCheckedOne &&
+          isFridayCheckedOne &&
+          isSaturdaydayCheckedOne &&
+          isSundayCheckedOne;
+
+      hourTwo = remindersList[1].hour;
+      minuteTwo = remindersList[1].minute;
+      isMondayCheckedTwo = remindersList[1].monday;
+      isTuesdayCheckedTwo = remindersList[1].tuesday;
+      isWednesdayCheckedTwo = remindersList[1].wednesday;
+      isThursdayCheckedTwo = remindersList[1].thursday;
+      isFridayCheckedTwo = remindersList[1].friday;
+      isSaturdaydayCheckedTwo = remindersList[1].saturday;
+      isSundayCheckedTwo = remindersList[1].sunday;
+      reminderIdTwo = remindersList[1].id;
+
+      isReminderTwoVisible = true;
+
+      isAllDaysCheckedTwo = isMondayCheckedTwo &&
+          isTuesdayCheckedTwo &&
+          isWednesdayCheckedTwo &&
+          isThursdayCheckedTwo &&
+          isFridayCheckedTwo &&
+          isSaturdaydayCheckedTwo &&
+          isSundayCheckedTwo;
+
+      hourThree = remindersList[2].hour;
+      minuteThree = remindersList[2].minute;
+      isMondayCheckedThree = remindersList[2].monday;
+      isTuesdayCheckedThree = remindersList[2].tuesday;
+      isWednesdayCheckedThree = remindersList[2].wednesday;
+      isThursdayCheckedThree = remindersList[2].thursday;
+      isFridayCheckedThree = remindersList[2].friday;
+      isSaturdaydayCheckedThree = remindersList[2].saturday;
+      isSundayCheckedThree = remindersList[2].sunday;
+      reminderIdTwo = remindersList[2].id;
+
+      isReminderThreeVisible = true;
+
+      isAllDaysCheckedThree = isMondayCheckedThree &&
+          isTuesdayCheckedThree &&
+          isWednesdayCheckedThree &&
+          isThursdayCheckedThree &&
+          isFridayCheckedThree &&
+          isSaturdaydayCheckedThree &&
+          isSundayCheckedThree;
+    } else if (remindersList.length == 4) {
+      numOfVisibileReminders = 4;
+
+      hourOne = remindersList[0].hour;
+      minuteOne = remindersList[0].minute;
+      isMondayCheckedOne = remindersList[0].monday;
+      isTuesdayCheckedOne = remindersList[0].tuesday;
+      isWednesdayCheckedOne = remindersList[0].wednesday;
+      isThursdayCheckedOne = remindersList[0].thursday;
+      isFridayCheckedOne = remindersList[0].friday;
+      isSaturdaydayCheckedOne = remindersList[0].saturday;
+      isSundayCheckedOne = remindersList[0].sunday;
+      reminderIdOne = remindersList[0].id;
+
+      isReminderOneVisible = true;
+
+      isAllDaysCheckedOne = isMondayCheckedOne &&
+          isTuesdayCheckedOne &&
+          isWednesdayCheckedOne &&
+          isThursdayCheckedOne &&
+          isFridayCheckedOne &&
+          isSaturdaydayCheckedOne &&
+          isSundayCheckedOne;
+
+      hourTwo = remindersList[1].hour;
+      minuteTwo = remindersList[1].minute;
+      isMondayCheckedTwo = remindersList[1].monday;
+      isTuesdayCheckedTwo = remindersList[1].tuesday;
+      isWednesdayCheckedTwo = remindersList[1].wednesday;
+      isThursdayCheckedTwo = remindersList[1].thursday;
+      isFridayCheckedTwo = remindersList[1].friday;
+      isSaturdaydayCheckedTwo = remindersList[1].saturday;
+      isSundayCheckedTwo = remindersList[1].sunday;
+      reminderIdTwo = remindersList[1].id;
+
+      isReminderTwoVisible = true;
+
+      isAllDaysCheckedTwo = isMondayCheckedTwo &&
+          isTuesdayCheckedTwo &&
+          isWednesdayCheckedTwo &&
+          isThursdayCheckedTwo &&
+          isFridayCheckedTwo &&
+          isSaturdaydayCheckedTwo &&
+          isSundayCheckedTwo;
+
+      hourThree = remindersList[2].hour;
+      minuteThree = remindersList[2].minute;
+      isMondayCheckedThree = remindersList[2].monday;
+      isTuesdayCheckedThree = remindersList[2].tuesday;
+      isWednesdayCheckedThree = remindersList[2].wednesday;
+      isThursdayCheckedThree = remindersList[2].thursday;
+      isFridayCheckedThree = remindersList[2].friday;
+      isSaturdaydayCheckedThree = remindersList[2].saturday;
+      isSundayCheckedThree = remindersList[2].sunday;
+      reminderIdThree = remindersList[2].id;
+
+      isReminderThreeVisible = true;
+
+      isAllDaysCheckedThree = isMondayCheckedThree &&
+          isTuesdayCheckedThree &&
+          isWednesdayCheckedThree &&
+          isThursdayCheckedThree &&
+          isFridayCheckedThree &&
+          isSaturdaydayCheckedThree &&
+          isSundayCheckedThree;
+
+      hourFour = remindersList[3].hour;
+      minuteFour = remindersList[3].minute;
+      isMondayCheckedFour = remindersList[3].monday;
+      isTuesdayCheckedFour = remindersList[3].tuesday;
+      isWednesdayCheckedFour = remindersList[3].wednesday;
+      isThursdayCheckedFour = remindersList[3].thursday;
+      isFridayCheckedFour = remindersList[3].friday;
+      isSaturdaydayCheckedFour = remindersList[3].saturday;
+      isSundayCheckedFour = remindersList[3].sunday;
+      reminderIdFour = remindersList[3].id;
+
+      isReminderFourVisible = true;
+
+      isAllDaysCheckedThree = isMondayCheckedFour &&
+          isTuesdayCheckedFour &&
+          isWednesdayCheckedFour &&
+          isThursdayCheckedFour &&
+          isFridayCheckedFour &&
+          isSaturdaydayCheckedFour &&
+          isSundayCheckedFour;
+    }
+
     super.didChangeDependencies();
   }
 
@@ -211,17 +437,6 @@ class MyCustomFormState extends State<MyCustomForm> {
 
   @override
   Widget build(BuildContext context) {
-    // final List args = ModalRoute.of(context).settings.arguments;
-
-    // id1 = args[0];
-
-    // medicineNameController.text = args[1];
-    // amountController.text = args[2].toString();
-    // dosageAmountController.text = args[3].toString();
-    // amountUnitController.text = args[4];
-    // isBefore = args[5];
-    // numOfVisibileReminders = args[6];
-
     return Form(
       key: _formKey,
       child: Column(
@@ -251,9 +466,9 @@ class MyCustomFormState extends State<MyCustomForm> {
                       MaterialStateProperty.all<Color>(Color(0XFF008bb0)),
                 ),
                 onPressed: () {
-                  addMedicineWrapper();
+                  updateMedicineWrapper();
                 },
-                child: Text('ADD')),
+                child: Text('UPDATE')),
           ),
         ],
       ),
@@ -1145,20 +1360,20 @@ class MyCustomFormState extends State<MyCustomForm> {
         ],
       );
 
-  void addMedicineWrapper() async {
-    // await localNotification.deleteAllNotifications();
-
+  void updateMedicineWrapper() async {
     final isValid = _formKey.currentState.validate();
 
     if (isValid) {
-      int medicineId = await addMedicine();
+      Medicine medicine = await updateMedicine();
+      int medicineId = medicine.id;
 
       if (numOfVisibileReminders == 1) {
         String title = medicineNameController.text;
         String body =
             'Take ${dosageAmountController.text} ${amountUnitController.text == 'ml' ? 'ml' : 'pills'} of ${medicineNameController.text} ${isBefore == true ? 'before meal' : 'after meal'}.';
 
-        addReminderToDB(
+        updateReminderToDB(
+            reminderIdOne,
             medicineId,
             hourOne,
             minuteOne,
@@ -1173,31 +1388,31 @@ class MyCustomFormState extends State<MyCustomForm> {
             isBefore);
 
         if (isMondayCheckedOne) {
-          addReminderToNotifications(medicineId + 1, medicineId, title, body,
+          updateReminderToNotifications(medicineId + 1, medicineId, title, body,
               DateTime.monday, hourOne, minuteOne);
         }
         if (isTuesdayCheckedOne) {
-          addReminderToNotifications(medicineId + 2, medicineId, title, body,
+          updateReminderToNotifications(medicineId + 2, medicineId, title, body,
               DateTime.tuesday, hourOne, minuteOne);
         }
         if (isWednesdayCheckedOne) {
-          addReminderToNotifications(medicineId + 3, medicineId, title, body,
+          updateReminderToNotifications(medicineId + 3, medicineId, title, body,
               DateTime.wednesday, hourOne, minuteOne);
         }
         if (isThursdayCheckedOne) {
-          addReminderToNotifications(medicineId + 4, medicineId, title, body,
+          updateReminderToNotifications(medicineId + 4, medicineId, title, body,
               DateTime.thursday, hourOne, minuteOne);
         }
         if (isFridayCheckedOne) {
-          addReminderToNotifications(medicineId + 5, medicineId, title, body,
+          updateReminderToNotifications(medicineId + 5, medicineId, title, body,
               DateTime.friday, hourOne, minuteOne);
         }
         if (isSaturdaydayCheckedOne) {
-          addReminderToNotifications(medicineId + 6, medicineId, title, body,
+          updateReminderToNotifications(medicineId + 6, medicineId, title, body,
               DateTime.saturday, hourOne, minuteOne);
         }
         if (isSundayCheckedOne) {
-          addReminderToNotifications(medicineId + 7, medicineId, title, body,
+          updateReminderToNotifications(medicineId + 7, medicineId, title, body,
               DateTime.sunday, hourOne, minuteOne);
         }
       } else if (numOfVisibileReminders == 2) {
@@ -1205,7 +1420,8 @@ class MyCustomFormState extends State<MyCustomForm> {
         String body =
             'Take ${dosageAmountController.text} ${amountUnitController.text == 'ml' ? 'ml' : 'pills'} of ${medicineNameController.text} ${isBefore == true ? 'before meal' : 'after meal'}.';
 
-        addReminderToDB(
+        updateReminderToDB(
+            reminderIdOne,
             medicineId,
             hourOne,
             minuteOne,
@@ -1220,35 +1436,36 @@ class MyCustomFormState extends State<MyCustomForm> {
             isBefore);
 
         if (isMondayCheckedOne) {
-          addReminderToNotifications(medicineId + 1, medicineId, title, body,
+          updateReminderToNotifications(medicineId + 1, medicineId, title, body,
               DateTime.monday, hourOne, minuteOne);
         }
         if (isTuesdayCheckedOne) {
-          addReminderToNotifications(medicineId + 2, medicineId, title, body,
+          updateReminderToNotifications(medicineId + 2, medicineId, title, body,
               DateTime.tuesday, hourOne, minuteOne);
         }
         if (isWednesdayCheckedOne) {
-          addReminderToNotifications(medicineId + 3, medicineId, title, body,
+          updateReminderToNotifications(medicineId + 3, medicineId, title, body,
               DateTime.wednesday, hourOne, minuteOne);
         }
         if (isThursdayCheckedOne) {
-          addReminderToNotifications(medicineId + 4, medicineId, title, body,
+          updateReminderToNotifications(medicineId + 4, medicineId, title, body,
               DateTime.thursday, hourOne, minuteOne);
         }
         if (isFridayCheckedOne) {
-          addReminderToNotifications(medicineId + 5, medicineId, title, body,
+          updateReminderToNotifications(medicineId + 5, medicineId, title, body,
               DateTime.friday, hourOne, minuteOne);
         }
         if (isSaturdaydayCheckedOne) {
-          addReminderToNotifications(medicineId + 6, medicineId, title, body,
+          updateReminderToNotifications(medicineId + 6, medicineId, title, body,
               DateTime.saturday, hourOne, minuteOne);
         }
         if (isSundayCheckedOne) {
-          addReminderToNotifications(medicineId + 7, medicineId, title, body,
+          updateReminderToNotifications(medicineId + 7, medicineId, title, body,
               DateTime.sunday, hourOne, minuteOne);
         }
 
-        addReminderToDB(
+        updateReminderToDB(
+            reminderIdTwo,
             medicineId,
             hourTwo,
             minuteTwo,
@@ -1263,39 +1480,40 @@ class MyCustomFormState extends State<MyCustomForm> {
             isBefore);
 
         if (isMondayCheckedTwo) {
-          addReminderToNotifications(medicineId + 8, medicineId, title, body,
+          updateReminderToNotifications(medicineId + 8, medicineId, title, body,
               DateTime.monday, hourTwo, minuteTwo);
         }
         if (isTuesdayCheckedTwo) {
-          addReminderToNotifications(medicineId + 9, medicineId, title, body,
+          updateReminderToNotifications(medicineId + 9, medicineId, title, body,
               DateTime.tuesday, hourTwo, minuteTwo);
         }
         if (isWednesdayCheckedTwo) {
-          addReminderToNotifications(medicineId + 10, medicineId, title, body,
-              DateTime.wednesday, hourTwo, minuteTwo);
+          updateReminderToNotifications(medicineId + 10, medicineId, title,
+              body, DateTime.wednesday, hourTwo, minuteTwo);
         }
         if (isThursdayCheckedTwo) {
-          addReminderToNotifications(medicineId + 11, medicineId, title, body,
-              DateTime.thursday, hourTwo, minuteTwo);
+          updateReminderToNotifications(medicineId + 11, medicineId, title,
+              body, DateTime.thursday, hourTwo, minuteTwo);
         }
         if (isFridayCheckedTwo) {
-          addReminderToNotifications(medicineId + 12, medicineId, title, body,
-              DateTime.friday, hourTwo, minuteTwo);
+          updateReminderToNotifications(medicineId + 12, medicineId, title,
+              body, DateTime.friday, hourTwo, minuteTwo);
         }
         if (isSaturdaydayCheckedTwo) {
-          addReminderToNotifications(medicineId + 13, medicineId, title, body,
-              DateTime.saturday, hourTwo, minuteTwo);
+          updateReminderToNotifications(medicineId + 13, medicineId, title,
+              body, DateTime.saturday, hourTwo, minuteTwo);
         }
         if (isSundayCheckedTwo) {
-          addReminderToNotifications(medicineId + 14, medicineId, title, body,
-              DateTime.sunday, hourTwo, minuteTwo);
+          updateReminderToNotifications(medicineId + 14, medicineId, title,
+              body, DateTime.sunday, hourTwo, minuteTwo);
         }
       } else if (numOfVisibileReminders == 3) {
         String title = medicineNameController.text;
         String body =
             'Take ${dosageAmountController.text} ${amountUnitController.text == 'ml' ? 'ml' : 'pills'} of ${medicineNameController.text} ${isBefore == true ? 'before meal' : 'after meal'}.';
 
-        addReminderToDB(
+        updateReminderToDB(
+            reminderIdOne,
             medicineId,
             hourOne,
             minuteOne,
@@ -1310,35 +1528,36 @@ class MyCustomFormState extends State<MyCustomForm> {
             isBefore);
 
         if (isMondayCheckedOne) {
-          addReminderToNotifications(medicineId + 1, medicineId, title, body,
+          updateReminderToNotifications(medicineId + 1, medicineId, title, body,
               DateTime.monday, hourOne, minuteOne);
         }
         if (isTuesdayCheckedOne) {
-          addReminderToNotifications(medicineId + 2, medicineId, title, body,
+          updateReminderToNotifications(medicineId + 2, medicineId, title, body,
               DateTime.tuesday, hourOne, minuteOne);
         }
         if (isWednesdayCheckedOne) {
-          addReminderToNotifications(medicineId + 3, medicineId, title, body,
+          updateReminderToNotifications(medicineId + 3, medicineId, title, body,
               DateTime.wednesday, hourOne, minuteOne);
         }
         if (isThursdayCheckedOne) {
-          addReminderToNotifications(medicineId + 4, medicineId, title, body,
+          updateReminderToNotifications(medicineId + 4, medicineId, title, body,
               DateTime.thursday, hourOne, minuteOne);
         }
         if (isFridayCheckedOne) {
-          addReminderToNotifications(medicineId + 5, medicineId, title, body,
+          updateReminderToNotifications(medicineId + 5, medicineId, title, body,
               DateTime.friday, hourOne, minuteOne);
         }
         if (isSaturdaydayCheckedOne) {
-          addReminderToNotifications(medicineId + 6, medicineId, title, body,
+          updateReminderToNotifications(medicineId + 6, medicineId, title, body,
               DateTime.saturday, hourOne, minuteOne);
         }
         if (isSundayCheckedOne) {
-          addReminderToNotifications(medicineId + 7, medicineId, title, body,
+          updateReminderToNotifications(medicineId + 7, medicineId, title, body,
               DateTime.sunday, hourOne, minuteOne);
         }
 
-        addReminderToDB(
+        updateReminderToDB(
+            reminderIdTwo,
             medicineId,
             hourTwo,
             minuteTwo,
@@ -1353,35 +1572,36 @@ class MyCustomFormState extends State<MyCustomForm> {
             isBefore);
 
         if (isMondayCheckedTwo) {
-          addReminderToNotifications(medicineId + 8, medicineId, title, body,
+          updateReminderToNotifications(medicineId + 8, medicineId, title, body,
               DateTime.monday, hourTwo, minuteTwo);
         }
         if (isTuesdayCheckedTwo) {
-          addReminderToNotifications(medicineId + 9, medicineId, title, body,
+          updateReminderToNotifications(medicineId + 9, medicineId, title, body,
               DateTime.tuesday, hourTwo, minuteTwo);
         }
         if (isWednesdayCheckedTwo) {
-          addReminderToNotifications(medicineId + 10, medicineId, title, body,
-              DateTime.wednesday, hourTwo, minuteTwo);
+          updateReminderToNotifications(medicineId + 10, medicineId, title,
+              body, DateTime.wednesday, hourTwo, minuteTwo);
         }
         if (isThursdayCheckedTwo) {
-          addReminderToNotifications(medicineId + 11, medicineId, title, body,
-              DateTime.thursday, hourTwo, minuteTwo);
+          updateReminderToNotifications(medicineId + 11, medicineId, title,
+              body, DateTime.thursday, hourTwo, minuteTwo);
         }
         if (isFridayCheckedTwo) {
-          addReminderToNotifications(medicineId + 12, medicineId, title, body,
-              DateTime.friday, hourTwo, minuteTwo);
+          updateReminderToNotifications(medicineId + 12, medicineId, title,
+              body, DateTime.friday, hourTwo, minuteTwo);
         }
         if (isSaturdaydayCheckedTwo) {
-          addReminderToNotifications(medicineId + 13, medicineId, title, body,
-              DateTime.saturday, hourTwo, minuteTwo);
+          updateReminderToNotifications(medicineId + 13, medicineId, title,
+              body, DateTime.saturday, hourTwo, minuteTwo);
         }
         if (isSundayCheckedTwo) {
-          addReminderToNotifications(medicineId + 14, medicineId, title, body,
-              DateTime.sunday, hourTwo, minuteTwo);
+          updateReminderToNotifications(medicineId + 14, medicineId, title,
+              body, DateTime.sunday, hourTwo, minuteTwo);
         }
 
-        addReminderToDB(
+        updateReminderToDB(
+            reminderIdThree,
             medicineId,
             hourThree,
             minuteThree,
@@ -1396,39 +1616,40 @@ class MyCustomFormState extends State<MyCustomForm> {
             isBefore);
 
         if (isMondayCheckedThree) {
-          addReminderToNotifications(medicineId + 15, medicineId, title, body,
-              DateTime.monday, hourThree, minuteThree);
+          updateReminderToNotifications(medicineId + 15, medicineId, title,
+              body, DateTime.monday, hourThree, minuteThree);
         }
         if (isTuesdayCheckedThree) {
-          addReminderToNotifications(medicineId + 16, medicineId, title, body,
-              DateTime.tuesday, hourThree, minuteThree);
+          updateReminderToNotifications(medicineId + 16, medicineId, title,
+              body, DateTime.tuesday, hourThree, minuteThree);
         }
         if (isWednesdayCheckedThree) {
-          addReminderToNotifications(medicineId + 17, medicineId, title, body,
-              DateTime.wednesday, hourThree, minuteThree);
+          updateReminderToNotifications(medicineId + 17, medicineId, title,
+              body, DateTime.wednesday, hourThree, minuteThree);
         }
         if (isThursdayCheckedThree) {
-          addReminderToNotifications(medicineId + 18, medicineId, title, body,
-              DateTime.thursday, hourThree, minuteThree);
+          updateReminderToNotifications(medicineId + 18, medicineId, title,
+              body, DateTime.thursday, hourThree, minuteThree);
         }
         if (isFridayCheckedThree) {
-          addReminderToNotifications(medicineId + 19, medicineId, title, body,
-              DateTime.friday, hourThree, minuteThree);
+          updateReminderToNotifications(medicineId + 19, medicineId, title,
+              body, DateTime.friday, hourThree, minuteThree);
         }
         if (isSaturdaydayCheckedThree) {
-          addReminderToNotifications(medicineId + 20, medicineId, title, body,
-              DateTime.saturday, hourThree, minuteThree);
+          updateReminderToNotifications(medicineId + 20, medicineId, title,
+              body, DateTime.saturday, hourThree, minuteThree);
         }
         if (isSundayCheckedThree) {
-          addReminderToNotifications(medicineId + 21, medicineId, title, body,
-              DateTime.sunday, hourThree, minuteThree);
+          updateReminderToNotifications(medicineId + 21, medicineId, title,
+              body, DateTime.sunday, hourThree, minuteThree);
         }
       } else if (numOfVisibileReminders == 4) {
         String title = medicineNameController.text;
         String body =
             'Take ${dosageAmountController.text} ${amountUnitController.text == 'ml' ? 'ml' : 'pills'} of ${medicineNameController.text} ${isBefore == true ? 'before meal' : 'after meal'}.';
 
-        addReminderToDB(
+        updateReminderToDB(
+            reminderIdOne,
             medicineId,
             hourOne,
             minuteOne,
@@ -1443,35 +1664,36 @@ class MyCustomFormState extends State<MyCustomForm> {
             isBefore);
 
         if (isMondayCheckedOne) {
-          addReminderToNotifications(medicineId + 1, medicineId, title, body,
+          updateReminderToNotifications(medicineId + 1, medicineId, title, body,
               DateTime.monday, hourOne, minuteOne);
         }
         if (isTuesdayCheckedOne) {
-          addReminderToNotifications(medicineId + 2, medicineId, title, body,
+          updateReminderToNotifications(medicineId + 2, medicineId, title, body,
               DateTime.tuesday, hourOne, minuteOne);
         }
         if (isWednesdayCheckedOne) {
-          addReminderToNotifications(medicineId + 3, medicineId, title, body,
+          updateReminderToNotifications(medicineId + 3, medicineId, title, body,
               DateTime.wednesday, hourOne, minuteOne);
         }
         if (isThursdayCheckedOne) {
-          addReminderToNotifications(medicineId + 4, medicineId, title, body,
+          updateReminderToNotifications(medicineId + 4, medicineId, title, body,
               DateTime.thursday, hourOne, minuteOne);
         }
         if (isFridayCheckedOne) {
-          addReminderToNotifications(medicineId + 5, medicineId, title, body,
+          updateReminderToNotifications(medicineId + 5, medicineId, title, body,
               DateTime.friday, hourOne, minuteOne);
         }
         if (isSaturdaydayCheckedOne) {
-          addReminderToNotifications(medicineId + 6, medicineId, title, body,
+          updateReminderToNotifications(medicineId + 6, medicineId, title, body,
               DateTime.saturday, hourOne, minuteOne);
         }
         if (isSundayCheckedOne) {
-          addReminderToNotifications(medicineId + 7, medicineId, title, body,
+          updateReminderToNotifications(medicineId + 7, medicineId, title, body,
               DateTime.sunday, hourOne, minuteOne);
         }
 
-        addReminderToDB(
+        updateReminderToDB(
+            reminderIdTwo,
             medicineId,
             hourTwo,
             minuteTwo,
@@ -1486,35 +1708,36 @@ class MyCustomFormState extends State<MyCustomForm> {
             isBefore);
 
         if (isMondayCheckedTwo) {
-          addReminderToNotifications(medicineId + 8, medicineId, title, body,
+          updateReminderToNotifications(medicineId + 8, medicineId, title, body,
               DateTime.monday, hourTwo, minuteTwo);
         }
         if (isTuesdayCheckedTwo) {
-          addReminderToNotifications(medicineId + 9, medicineId, title, body,
+          updateReminderToNotifications(medicineId + 9, medicineId, title, body,
               DateTime.tuesday, hourTwo, minuteTwo);
         }
         if (isWednesdayCheckedTwo) {
-          addReminderToNotifications(medicineId + 10, medicineId, title, body,
-              DateTime.wednesday, hourTwo, minuteTwo);
+          updateReminderToNotifications(medicineId + 10, medicineId, title,
+              body, DateTime.wednesday, hourTwo, minuteTwo);
         }
         if (isThursdayCheckedTwo) {
-          addReminderToNotifications(medicineId + 11, medicineId, title, body,
-              DateTime.thursday, hourTwo, minuteTwo);
+          updateReminderToNotifications(medicineId + 11, medicineId, title,
+              body, DateTime.thursday, hourTwo, minuteTwo);
         }
         if (isFridayCheckedTwo) {
-          addReminderToNotifications(medicineId + 12, medicineId, title, body,
-              DateTime.friday, hourTwo, minuteTwo);
+          updateReminderToNotifications(medicineId + 12, medicineId, title,
+              body, DateTime.friday, hourTwo, minuteTwo);
         }
         if (isSaturdaydayCheckedTwo) {
-          addReminderToNotifications(medicineId + 13, medicineId, title, body,
-              DateTime.saturday, hourTwo, minuteTwo);
+          updateReminderToNotifications(medicineId + 13, medicineId, title,
+              body, DateTime.saturday, hourTwo, minuteTwo);
         }
         if (isSundayCheckedTwo) {
-          addReminderToNotifications(medicineId + 14, medicineId, title, body,
-              DateTime.sunday, hourTwo, minuteTwo);
+          updateReminderToNotifications(medicineId + 14, medicineId, title,
+              body, DateTime.sunday, hourTwo, minuteTwo);
         }
 
-        addReminderToDB(
+        updateReminderToDB(
+            reminderIdThree,
             medicineId,
             hourThree,
             minuteThree,
@@ -1529,35 +1752,36 @@ class MyCustomFormState extends State<MyCustomForm> {
             isBefore);
 
         if (isMondayCheckedThree) {
-          addReminderToNotifications(medicineId + 15, medicineId, title, body,
-              DateTime.monday, hourThree, minuteThree);
+          updateReminderToNotifications(medicineId + 15, medicineId, title,
+              body, DateTime.monday, hourThree, minuteThree);
         }
         if (isTuesdayCheckedThree) {
-          addReminderToNotifications(medicineId + 16, medicineId, title, body,
-              DateTime.tuesday, hourThree, minuteThree);
+          updateReminderToNotifications(medicineId + 16, medicineId, title,
+              body, DateTime.tuesday, hourThree, minuteThree);
         }
         if (isWednesdayCheckedThree) {
-          addReminderToNotifications(medicineId + 17, medicineId, title, body,
-              DateTime.wednesday, hourThree, minuteThree);
+          updateReminderToNotifications(medicineId + 17, medicineId, title,
+              body, DateTime.wednesday, hourThree, minuteThree);
         }
         if (isThursdayCheckedThree) {
-          addReminderToNotifications(medicineId + 18, medicineId, title, body,
-              DateTime.thursday, hourThree, minuteThree);
+          updateReminderToNotifications(medicineId + 18, medicineId, title,
+              body, DateTime.thursday, hourThree, minuteThree);
         }
         if (isFridayCheckedThree) {
-          addReminderToNotifications(medicineId + 19, medicineId, title, body,
-              DateTime.friday, hourThree, minuteThree);
+          updateReminderToNotifications(medicineId + 19, medicineId, title,
+              body, DateTime.friday, hourThree, minuteThree);
         }
         if (isSaturdaydayCheckedThree) {
-          addReminderToNotifications(medicineId + 20, medicineId, title, body,
-              DateTime.saturday, hourThree, minuteThree);
+          updateReminderToNotifications(medicineId + 20, medicineId, title,
+              body, DateTime.saturday, hourThree, minuteThree);
         }
         if (isSundayCheckedThree) {
-          addReminderToNotifications(medicineId + 21, medicineId, title, body,
-              DateTime.sunday, hourThree, minuteThree);
+          updateReminderToNotifications(medicineId + 21, medicineId, title,
+              body, DateTime.sunday, hourThree, minuteThree);
         }
 
-        addReminderToDB(
+        updateReminderToDB(
+            reminderIdFour,
             medicineId,
             hourFour,
             minuteFour,
@@ -1572,37 +1796,37 @@ class MyCustomFormState extends State<MyCustomForm> {
             isBefore);
 
         if (isMondayCheckedFour) {
-          addReminderToNotifications(medicineId + 22, medicineId, title, body,
-              DateTime.monday, hourFour, minuteFour);
+          updateReminderToNotifications(medicineId + 22, medicineId, title,
+              body, DateTime.monday, hourFour, minuteFour);
         }
         if (isTuesdayCheckedFour) {
-          addReminderToNotifications(medicineId + 23, medicineId, title, body,
-              DateTime.tuesday, hourFour, minuteFour);
+          updateReminderToNotifications(medicineId + 23, medicineId, title,
+              body, DateTime.tuesday, hourFour, minuteFour);
         }
         if (isWednesdayCheckedFour) {
-          addReminderToNotifications(medicineId + 24, medicineId, title, body,
-              DateTime.wednesday, hourFour, minuteFour);
+          updateReminderToNotifications(medicineId + 24, medicineId, title,
+              body, DateTime.wednesday, hourFour, minuteFour);
         }
         if (isThursdayCheckedFour) {
-          addReminderToNotifications(medicineId + 25, medicineId, title, body,
-              DateTime.thursday, hourFour, minuteFour);
+          updateReminderToNotifications(medicineId + 25, medicineId, title,
+              body, DateTime.thursday, hourFour, minuteFour);
         }
         if (isFridayCheckedFour) {
-          addReminderToNotifications(medicineId + 26, medicineId, title, body,
-              DateTime.friday, hourFour, minuteFour);
+          updateReminderToNotifications(medicineId + 26, medicineId, title,
+              body, DateTime.friday, hourFour, minuteFour);
         }
         if (isSaturdaydayCheckedFour) {
-          addReminderToNotifications(medicineId + 27, medicineId, title, body,
-              DateTime.saturday, hourFour, minuteFour);
+          updateReminderToNotifications(medicineId + 27, medicineId, title,
+              body, DateTime.saturday, hourFour, minuteFour);
         }
         if (isSundayCheckedFour) {
-          addReminderToNotifications(medicineId + 28, medicineId, title, body,
-              DateTime.sunday, hourFour, minuteFour);
+          updateReminderToNotifications(medicineId + 28, medicineId, title,
+              body, DateTime.sunday, hourFour, minuteFour);
         }
       }
 
       Scaffold.of(context).showSnackBar(SnackBar(
-        content: Text('Medicine is added!'),
+        content: Text('Medicine is updated!'),
         duration: Duration(seconds: 3),
       ));
 
@@ -1668,7 +1892,7 @@ class MyCustomFormState extends State<MyCustomForm> {
     }
   }
 
-  Future<int> addMedicine() async {
+  Future<Medicine> updateMedicine() async {
     ColorLizer colorlizer = ColorLizer();
     Color color = colorlizer.getSpecialFiledColor([
       Colors.lightBlue,
@@ -1679,6 +1903,7 @@ class MyCustomFormState extends State<MyCustomForm> {
     ]);
 
     final medicine = Medicine(
+      id: id1,
       name: medicineNameController.text,
       totalAmount: int.tryParse(amountController.text),
       currentAmount: int.tryParse(amountController.text),
@@ -1689,21 +1914,21 @@ class MyCustomFormState extends State<MyCustomForm> {
       color: color.toString().substring(35, 45),
     );
 
-    final medicineObj =
-        await MedicineDatabase.instance.createMedicine(medicine);
-
-    return medicineObj.id;
+    return await MedicineDatabase.instance.updateMedicine(medicine);
   }
 
-  Future addReminderToNotifications(int idForNotification, int medicineId,
+  Future updateReminderToNotifications(int idForNotification, int medicineId,
       String title, String body, int day, int hour, int minute) async {
     await localNotification.configureLocalTimeZone();
+
+    await localNotification.deleteOneNotification(idForNotification);
 
     await localNotification.showWeeklyAtDayAndTimeNotification(
         idForNotification, medicineId, title, body, day, hour, minute);
   }
 
-  Future addReminderToDB(
+  Future updateReminderToDB(
+      int reminderId,
       int medicineId,
       int hour,
       int minute,
@@ -1717,6 +1942,7 @@ class MyCustomFormState extends State<MyCustomForm> {
       String medicineName,
       bool isBefore) async {
     final reminder = Reminder(
+      id: reminderId,
       medicineId: medicineId,
       hour: hour,
       minute: minute,
@@ -1731,6 +1957,6 @@ class MyCustomFormState extends State<MyCustomForm> {
       isBefore: isBefore,
     );
 
-    await MedicineDatabase.instance.createReminder(reminder);
+    await MedicineDatabase.instance.updateReminder(reminder);
   }
 }

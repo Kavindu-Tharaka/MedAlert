@@ -1,5 +1,6 @@
 import 'package:MedAlert/db/database_helper.dart';
 import 'package:MedAlert/model/medicine.dart';
+import 'package:MedAlert/model/reminder.dart';
 import 'package:MedAlert/notifications/local_notification.dart';
 import 'package:MedAlert/screens/add_medicine_page.dart';
 import 'package:MedAlert/screens/medicine_update_page.dart';
@@ -186,8 +187,12 @@ class MedicineTile extends StatelessWidget {
                                   'Update',
                                   style: TextStyle(color: Colors.black54),
                                 ),
-                                onTap: () {
+                                onTap: () async {
                                   Navigator.pop(context);
+
+                                  List<Reminder> remindersList =
+                                      await MedicineDatabase.instance
+                                          .readRemindersByMedicineId(id);
 
                                   Navigator.pushNamed(
                                       context, MedicineUpdatePage.routeName,
@@ -198,7 +203,8 @@ class MedicineTile extends StatelessWidget {
                                         this.dosageAmount,
                                         this.amountUnit,
                                         this.isBefore,
-                                        this.timesPerDay
+                                        this.timesPerDay,
+                                        remindersList
                                       ]);
 
                                   // Navigator.pushNamed(
