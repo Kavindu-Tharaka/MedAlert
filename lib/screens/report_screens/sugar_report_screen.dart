@@ -45,7 +45,7 @@ class _SugarReportScreenState extends State<SugarReportScreen> {
         children: [
           ListTile(
             title: Text(
-                'Sugar Level Fasting           - ${sugarItem.sugarLevelF}\nSugar Level Postprandial  - ${sugarItem.sugarLevelPP}'),
+                'Sugar Level Fasting           - ${sugarItem.sugarLevelF}  mgs/dl\nSugar Level Postprandial  - ${sugarItem.sugarLevelPP} mgs/dl'),
             subtitle: Text('${_dateFormatter.format(sugarItem.reportDate)}'),
             trailing: IconButton(
               icon: const Icon(Icons.delete),
