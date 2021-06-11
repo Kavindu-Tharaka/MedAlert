@@ -1,3 +1,4 @@
+import 'package:MedAlert/screens/medicine_update_page.dart';
 import 'package:flutter/material.dart';
 import './screens/home_screen.dart';
 import './screens/tabs_screen.dart';
@@ -26,7 +27,10 @@ class MyApp extends StatelessWidget {
                   fontFamily: 'RobotoCondensed',
                   fontWeight: FontWeight.bold))),
       home: HomeScreen(),
-      routes: {TabsScreen.routeName: (ctx) => TabsScreen()},
+      routes: {
+        TabsScreen.routeName: (ctx) => TabsScreen(),
+        MedicineUpdatePage.routeName: (ctx) => MedicineUpdatePage()
+      },
     );
   }
 }

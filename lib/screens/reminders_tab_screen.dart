@@ -22,6 +22,8 @@ class ReminderseTabScreenState extends State<RemindersTabScreen> {
   Future refreshReminders() async {
     setState(() => isLoading = true);
 
+    todayRemindersList.clear();
+
     this.reminders = await MedicineDatabase.instance.readAllReminders();
 
     reminders.forEach((reminder) {
@@ -98,14 +100,17 @@ class ReminderseTabScreenState extends State<RemindersTabScreen> {
                       'assets\\images\\no_notifications.png',
                       height: 200,
                     )
-                  : ListView(
-                      children: todayRemindersList
-                          .map((reminder) => ReminderTile(
-                              medicineName: reminder.medicineName,
-                              hour: reminder.hour,
-                              minute: reminder.minute,
-                              isBefore: reminder.isBefore))
-                          .toList(),
+                  : RefreshIndicator(
+                      onRefresh: refreshReminders,
+                      child: ListView(
+                        children: todayRemindersList
+                            .map((reminder) => ReminderTile(
+                                medicineName: reminder.medicineName,
+                                hour: reminder.hour,
+                                minute: reminder.minute,
+                                isBefore: reminder.isBefore))
+                            .toList(),
+                      ),
                     ),
         ));
   }

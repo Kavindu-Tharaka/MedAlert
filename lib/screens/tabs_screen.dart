@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../widgets/drawer.dart';
 import './diary_screen.dart';
 import './medication_screen.dart';
 import './report_screen.dart';
@@ -11,7 +10,7 @@ class TabsScreen extends StatefulWidget {
 }
 
 class _TabsScreenState extends State<TabsScreen> {
-  int _selectedIndex = 2;
+  int _selectedIndex = 1;
 
   List<Widget> _widgetOptions = <Widget>[
     DiaryScreen(),

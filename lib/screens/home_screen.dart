@@ -25,6 +25,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Future refreshReminders() async {
     setState(() => isLoading = true);
 
+    todayRemindersList.clear();
+
     this.reminders = await MedicineDatabase.instance.readAllReminders();
 
     reminders.forEach((reminder) {
@@ -148,15 +150,18 @@ class _HomeScreenState extends State<HomeScreen> {
                                 'assets\\images\\no_notifications.png',
                                 height: 175,
                               )
-                            : ListView(
-                                shrinkWrap: true,
-                                children: todayRemindersList
-                                    .map((reminder) => ReminderTile(
-                                        medicineName: reminder.medicineName,
-                                        hour: reminder.hour,
-                                        minute: reminder.minute,
-                                        isBefore: reminder.isBefore))
-                                    .toList(),
+                            : RefreshIndicator(
+                                onRefresh: refreshReminders,
+                                child: ListView(
+                                  shrinkWrap: true,
+                                  children: todayRemindersList
+                                      .map((reminder) => ReminderTile(
+                                          medicineName: reminder.medicineName,
+                                          hour: reminder.hour,
+                                          minute: reminder.minute,
+                                          isBefore: reminder.isBefore))
+                                      .toList(),
+                                ),
                               ),
                   ),
                 ],

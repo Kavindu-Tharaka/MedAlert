@@ -2,6 +2,7 @@ import 'package:MedAlert/db/database_helper.dart';
 import 'package:MedAlert/model/medicine.dart';
 import 'package:MedAlert/notifications/local_notification.dart';
 import 'package:MedAlert/screens/add_medicine_page.dart';
+import 'package:MedAlert/screens/medicine_update_page.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
@@ -51,6 +52,9 @@ class _MedicineTabScsreenState extends State<MedicinesTabScreen> {
                                 medicine.name,
                                 medicine.totalAmount,
                                 medicine.currentAmount,
+                                medicine.dosageAmount,
+                                medicine.isBefore,
+                                medicine.timesPerDay,
                                 medicine.color,
                                 medicine.amountUnit,
                                 this.refreshMedicine))
@@ -81,12 +85,24 @@ class MedicineTile extends StatelessWidget {
   final String name;
   final int totalAmount;
   final int currentAmount;
+  final int dosageAmount;
+  final bool isBefore;
+  final int timesPerDay;
   final String color;
   final String amountUnit;
   final refreshMethod;
 
-  MedicineTile(this.id, this.name, this.totalAmount, this.currentAmount,
-      this.color, this.amountUnit, this.refreshMethod);
+  MedicineTile(
+      this.id,
+      this.name,
+      this.totalAmount,
+      this.currentAmount,
+      this.dosageAmount,
+      this.isBefore,
+      this.timesPerDay,
+      this.color,
+      this.amountUnit,
+      this.refreshMethod);
 
   @override
   Widget build(BuildContext context) {
@@ -140,8 +156,7 @@ class MedicineTile extends StatelessWidget {
                           Container(
                             padding: EdgeInsets.symmetric(vertical: 3),
                             child: Text(
-                              'Available Quantity: ' +
-                                  this.currentAmount.toString() + this.amountUnit == 'ml' ? this.amountUnit : 'pills',
+                              'Available Quantity: ${this.currentAmount.toString()} ${this.amountUnit == 'ml' ? this.amountUnit : 'pills'}',
                               style: TextStyle(
                                   color: Colors.grey[600], fontSize: 12),
                             ),
@@ -174,18 +189,28 @@ class MedicineTile extends StatelessWidget {
                                 onTap: () {
                                   Navigator.pop(context);
 
+                                  Navigator.pushNamed(
+                                      context, MedicineUpdatePage.routeName,
+                                      arguments: [
+                                        this.id,
+                                        this.name,
+                                        this.totalAmount,
+                                        this.dosageAmount,
+                                        this.amountUnit,
+                                        this.isBefore,
+                                        this.timesPerDay
+                                      ]);
+
                                   // Navigator.pushNamed(
-                                  //     context, "/updateBeneficiary",
-                                  //     arguments: BeneficiaryListItem(
+                                  //     context, "/update-medicine",
+                                  //     arguments: MedicineUpdatePage(
                                   //         this.id,
                                   //         this.name,
-                                  //         this.account,
-                                  //         this.branch,
-                                  //         this.image,
-                                  //         this.intraORinter,
-                                  //         this.contact,
-                                  //         this.favouriteBeneficiaryList,
-                                  //         this.refreshMeth));
+                                  //         this.totalAmount,
+                                  //         this.dosageAmount,
+                                  //         this.amountUnit,
+                                  //         this.isBefore,
+                                  //         this.timesPerDay));
                                 },
                               )),
                               PopupMenuItem(
