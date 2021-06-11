@@ -11,7 +11,7 @@ class _MedicationScreenState extends State<MedicationScreen> {
   final tab = TabBar(tabs: <Tab>[
     Tab(
       child: Text(
-        'Upcoming Reminders',
+        'Today\'s Reminders',
         style: TextStyle(color: Colors.grey[700]),
       ),
     ),

@@ -22,6 +22,8 @@ class ReminderseTabScreenState extends State<RemindersTabScreen> {
   Future refreshReminders() async {
     setState(() => isLoading = true);
 
+    todayRemindersList.clear();
+
     this.reminders = await MedicineDatabase.instance.readAllReminders();
 
     reminders.forEach((reminder) {
@@ -94,18 +96,21 @@ class ReminderseTabScreenState extends State<RemindersTabScreen> {
           child: isLoading
               ? CircularProgressIndicator()
               : todayRemindersList.isEmpty
-                  ? Text(
-                      'No More Reminders For Today',
-                      style: TextStyle(color: Colors.black, fontSize: 24),
+                  ? Image.asset(
+                      'assets\\images\\no_notifications.png',
+                      height: 200,
                     )
-                  : ListView(
-                      children: todayRemindersList
-                          .map((reminder) => ReminderTile(
-                              medicineName: reminder.medicineName,
-                              hour: reminder.hour,
-                              minute: reminder.minute,
-                              isBefore: reminder.isBefore))
-                          .toList(),
+                  : RefreshIndicator(
+                      onRefresh: refreshReminders,
+                      child: ListView(
+                        children: todayRemindersList
+                            .map((reminder) => ReminderTile(
+                                medicineName: reminder.medicineName,
+                                hour: reminder.hour,
+                                minute: reminder.minute,
+                                isBefore: reminder.isBefore))
+                            .toList(),
+                      ),
                     ),
         ));
   }
@@ -139,7 +144,7 @@ class ReminderTile extends StatelessWidget {
                         topLeft: Radius.circular(12),
                         bottomLeft: Radius.circular(12),
                       ),
-                      color: Colors.teal[300],
+                      color: Color(0XFF008bb0),
                     ),
                     height: 70,
                     child: Center(
@@ -156,9 +161,12 @@ class ReminderTile extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            this.medicineName,
-                            style: TextStyle(fontSize: 20),
+                          Container(
+                            padding: EdgeInsets.symmetric(vertical: 3),
+                            child: Text(
+                              this.medicineName,
+                              style: TextStyle(fontSize: 20),
+                            ),
                           ),
                           Container(
                             padding: EdgeInsets.symmetric(
@@ -170,8 +178,8 @@ class ReminderTile extends StatelessWidget {
                             ),
                             decoration: BoxDecoration(
                                 color: this.isBefore
-                                    ? Colors.teal
-                                    : Colors.blueAccent,
+                                    ? Color(0XFF009688)
+                                    : Color(0XFF8bc34a),
                                 borderRadius: BorderRadius.circular(10)),
                           )
                         ],

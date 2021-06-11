@@ -155,6 +155,14 @@ class MedicineDatabase {
     return result.map((json) => Reminder.fromJson(json)).toList();
   }
 
+  Future<List<Reminder>> readRemindersByMedicineId(id) async {
+    final db = await instance.database;
+
+    final result = await db.rawQuery('SELECT * FROM $tableReminder WHERE ${ReminderFields.colMedicineId} = $id');
+
+    return result.map((json) => Reminder.fromJson(json)).toList();
+  }
+
   Future<int> updateReminder(Reminder reminder) async {
     final db = await instance.database;
 

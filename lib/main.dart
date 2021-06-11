@@ -1,3 +1,4 @@
+import 'package:MedAlert/screens/medicine_update_page.dart';
 import 'package:flutter/material.dart';
 import './screens/home_screen.dart';
 import './screens/tabs_screen.dart';
@@ -8,14 +9,15 @@ void main() {
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
-   @override
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Welcome to Flutter',
       theme: ThemeData(
-          primarySwatch: Colors.pink,
-          accentColor: Colors.amber,
-          canvasColor: Color.fromRGBO(255, 254, 229, 1),
+          primaryColor: Colors.white,
+          accentColor: Color(0XFF008bb0),
+          canvasColor: Colors.white,
           fontFamily: 'Raleway',
           textTheme: ThemeData.light().textTheme.copyWith(
               body1: TextStyle(color: Color.fromRGBO(20, 51, 51, 1)),
@@ -24,12 +26,11 @@ class MyApp extends StatelessWidget {
                   fontSize: 20,
                   fontFamily: 'RobotoCondensed',
                   fontWeight: FontWeight.bold))),
-      home:  HomeScreen(),
+      home: HomeScreen(),
       routes: {
-        TabsScreen.routeName : (ctx) => TabsScreen()
+        TabsScreen.routeName: (ctx) => TabsScreen(),
+        MedicineUpdatePage.routeName: (ctx) => MedicineUpdatePage()
       },
-      
     );
   }
 }
-

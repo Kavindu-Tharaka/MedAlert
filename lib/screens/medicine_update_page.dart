@@ -4,24 +4,36 @@ import 'package:MedAlert/model/reminder.dart';
 import 'package:MedAlert/notifications/local_notification.dart';
 import 'package:colorlizer/colorlizer.dart';
 import 'package:flutter/material.dart';
-
 import 'package:numberpicker/numberpicker.dart';
 
-class AddMedicinePage extends StatefulWidget {
-  final Medicine medicine;
-
-  const AddMedicinePage({
-    Key key,
-    this.medicine,
-  }) : super(key: key);
+class MedicineUpdatePage extends StatefulWidget {
+  static const routeName = '/update-medicine';
 
   @override
-  _AddMedicinePageState createState() => _AddMedicinePageState();
+  _MedicineUpdatePageState createState() => _MedicineUpdatePageState();
 }
 
-class _AddMedicinePageState extends State<AddMedicinePage> {
+class _MedicineUpdatePageState extends State<MedicineUpdatePage> {
+  // int id;
+  // String name;
+  // int amount;
+  // int dosageAmount;
+  // String amountUnit;
+  // bool isBefore;
+  // int timesPerDay;
+
   @override
   Widget build(BuildContext context) {
+    // final List args = ModalRoute.of(context).settings.arguments;
+
+    // id = args[0];
+    // name = args[1];
+    // amount = args[2];
+    // dosageAmount = args[3];
+    // amountUnit = args[4];
+    // isBefore = args[5];
+    // timesPerDay = args[6];
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -61,9 +73,11 @@ class MyCustomForm extends StatefulWidget {
 }
 
 class MyCustomFormState extends State<MyCustomForm> {
+  int id1;
+
   final _formKey = GlobalKey<FormState>();
-  int numOfVisibileReminders = 1;
-  bool isBefore = false;
+  int numOfVisibileReminders;
+  bool isBefore;
   int temp = 1;
 
   int hourOne = 13;
@@ -143,18 +157,45 @@ class MyCustomFormState extends State<MyCustomForm> {
   void initState() {
     localNotification.setOnNotificationReceiveMethod(onNotificationReceive);
     localNotification.setOnNotificationClickMethod(onNotificationClick);
-
-    isBefore = false;
-    numOfVisibileReminders = 1;
-    amountUnitController.text = 'count';
-
-    ///////////
-    medicineNameController.text = 'Sample Med';
-    amountController.text = '30';
-    dosageAmountController.text = '2';
-    ///////////
-
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    final List args = ModalRoute.of(context).settings.arguments;
+
+    id1 = args[0];
+
+    medicineNameController.text = args[1];
+    amountController.text = args[2].toString();
+    dosageAmountController.text = args[3].toString();
+    amountUnitController.text = args[4];
+    isBefore = args[5];
+    numOfVisibileReminders = args[6];
+
+    if (numOfVisibileReminders == 1) {
+      isReminderOneVisible = true;
+      isReminderTwoVisible = false;
+      isReminderThreeVisible = false;
+      isReminderFourVisible = false;
+    } else if (numOfVisibileReminders == 2) {
+      isReminderOneVisible = true;
+      isReminderTwoVisible = true;
+      isReminderThreeVisible = false;
+      isReminderFourVisible = false;
+    } else if (numOfVisibileReminders == 3) {
+      isReminderOneVisible = true;
+      isReminderTwoVisible = true;
+      isReminderThreeVisible = true;
+      isReminderFourVisible = false;
+    } else if (numOfVisibileReminders == 4) {
+      isReminderOneVisible = true;
+      isReminderTwoVisible = true;
+      isReminderThreeVisible = true;
+      isReminderFourVisible = true;
+    }
+
+    super.didChangeDependencies();
   }
 
   @override
@@ -170,6 +211,17 @@ class MyCustomFormState extends State<MyCustomForm> {
 
   @override
   Widget build(BuildContext context) {
+    // final List args = ModalRoute.of(context).settings.arguments;
+
+    // id1 = args[0];
+
+    // medicineNameController.text = args[1];
+    // amountController.text = args[2].toString();
+    // dosageAmountController.text = args[3].toString();
+    // amountUnitController.text = args[4];
+    // isBefore = args[5];
+    // numOfVisibileReminders = args[6];
+
     return Form(
       key: _formKey,
       child: Column(
@@ -299,7 +351,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                   ),
                 ),
                 isExpanded: true,
-                value: 'count',
+                value: amountUnitController.text,
                 onChanged: (String values) {
                   setState(() {
                     amountUnitController.text = values;
