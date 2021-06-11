@@ -131,28 +131,28 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Today\'s My Reminders',
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600, color: Colors.black54),
-                  ),
-                  Divider(
-                    thickness: 2,
-                  ),
-                  Center(
-                    child: isLoading
-                        ? CircularProgressIndicator()
-                        : todayRemindersList.isEmpty
-                            ? Image.asset(
-                                'assets\\images\\no_notifications.png',
-                                height: 175,
-                              )
-                            : RefreshIndicator(
-                                onRefresh: refreshReminders,
-                                child: ListView(
+              child: RefreshIndicator(
+                onRefresh: refreshReminders,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Today\'s My Reminders',
+                      style: TextStyle(
+                          fontWeight: FontWeight.w600, color: Colors.black54),
+                    ),
+                    Divider(
+                      thickness: 2,
+                    ),
+                    Center(
+                      child: isLoading
+                          ? CircularProgressIndicator()
+                          : todayRemindersList.isEmpty
+                              ? Image.asset(
+                                  'assets\\images\\no_notifications.png',
+                                  height: 175,
+                                )
+                              : ListView(
                                   shrinkWrap: true,
                                   children: todayRemindersList
                                       .map((reminder) => ReminderTile(
@@ -162,9 +162,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                           isBefore: reminder.isBefore))
                                       .toList(),
                                 ),
-                              ),
-                  ),
-                ],
+                    ),
+                  ],
+                ),
               ),
             ),
             Padding(
