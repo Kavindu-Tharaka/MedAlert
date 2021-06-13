@@ -14,7 +14,7 @@ class MedicineDatabase {
   Future<Database> get database async {
     if (_database != null) return _database;
 
-    _database = await _initDB('medicine.db');
+    _database = await _initDB('newmember1.db');
     return _database;
   }
 
@@ -65,7 +65,7 @@ class MedicineDatabase {
           ${MemberFields.colName} TEXT NOT NULL, 
           ${MemberFields.colEmail} TEXT NOT NULL,
           ${MemberFields.colWeight} INTEGER NOT NULL,
-          ${MemberFields.colAge} INTEGER NOT NULL,
+          ${MemberFields.colAge} INTEGER NOT NULL
         )
     ''');
 
@@ -104,15 +104,15 @@ class MedicineDatabase {
     return result.map((json) => Medicine.fromJson(json)).toList();
   }
 
-  Future<int> updateMedicine(Medicine medicine) async {
+  Future<Medicine> updateMedicine(Medicine medicine) async {
     final db = await instance.database;
 
-    return db.update(
-      tableMedicine,
-      medicine.toJson(),
-      where: '${MedicineFields.colId} = ?',
-      whereArgs: [medicine.id],
-    );
+    int boool = medicine.isBefore ? 1 : 0;
+
+    await db.rawUpdate(
+        'UPDATE $tableMedicine SET ${MedicineFields.colName} = \'${medicine.name}\', ${MedicineFields.colTotalAmount} = ${medicine.totalAmount}, ${MedicineFields.colDosageAmount} = ${medicine.dosageAmount}, ${MedicineFields.colAmountUnit} = \'${medicine.amountUnit}\', ${MedicineFields.colTimesPerDay} = ${medicine.timesPerDay}, ${MedicineFields.colIsBefore} = $boool WHERE ${MedicineFields.colId} = ${medicine.id}');
+
+    return await MedicineDatabase.instance.readMedicine(medicine.id);
   }
 
   Future<int> reduceMedicineCount(Medicine medicine) async {
@@ -169,6 +169,15 @@ class MedicineDatabase {
     return result.map((json) => Reminder.fromJson(json)).toList();
   }
 
+  Future<List<Reminder>> readRemindersByMedicineId(medicineId) async {
+    final db = await instance.database;
+
+    final result = await db.rawQuery(
+        'SELECT * FROM $tableReminder WHERE ${ReminderFields.colMedicineId} = $medicineId');
+
+    return result.map((json) => Reminder.fromJson(json)).toList();
+  }
+
   Future<int> updateReminder(Reminder reminder) async {
     final db = await instance.database;
 
@@ -215,10 +224,11 @@ Future<Member> createMember(Member member) async {
   }
 
   Future<List<Member>> readAllMembers() async {
+    print('In all read function ');
     final db = await instance.database;
 
     final result = await db.rawQuery('SELECT * FROM $tableMember');
-
+    
     return result.map((json) => Member.fromJson(json)).toList();
   }
 

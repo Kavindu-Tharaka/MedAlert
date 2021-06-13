@@ -23,6 +23,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+    http: ^0.13.3
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -73,9 +74,12 @@ flutter:
   assets:
     - assets\images\jona.png
     - assets\images\MedAlertIcon.png
-    - assets\images\MedAlertLogo.png
     - assets\images\WelcomeScreanImage.png
-
+    - assets\images\logo.png
+    - assets\images\MedAlert_Logo.png
+    - assets\images\no_medicines.png
+    - assets\images\no_notifications.png
+    - assets\images\no_member.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
