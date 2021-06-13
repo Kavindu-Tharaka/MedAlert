@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import './screens/new_member_screen.dart';
 import './screens/home_screen.dart';
-import './widgets/drawer.dart';
 import './screens/tabs_screen.dart';
 import './screens/new_member_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
