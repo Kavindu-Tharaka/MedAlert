@@ -1,11 +1,17 @@
+import 'package:MedAlert/model/member.dart';
+import 'package:MedAlert/widgets/member.dart';
+import 'package:MedAlert/widgets/member_list.dart';
 import 'package:MedAlert/db/database_helper.dart';
 import 'package:MedAlert/model/reminder.dart';
 import 'package:MedAlert/screens/reminders_tab_screen.dart';
 import 'package:flutter/material.dart';
 import '../widgets/drawer.dart';
 import './tabs_screen.dart';
+import './new_member_screen.dart';
 
 class HomeScreen extends StatefulWidget {
+  static final routeName = '/home';
+
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -14,6 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Reminder> reminders;
   List<Reminder> todayRemindersList = [];
   bool isLoading = false;
+
 
   @override
   void initState() {
@@ -91,6 +98,9 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() => isLoading = false);
   }
 
+
+ 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -103,6 +113,16 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       drawer: AppDrawer(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).pushNamed(NewMemberScreen.routeName);
+        },
+        child: const Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
+         
+      ),
       body: SingleChildScrollView(
         child: (Column(
           children: <Widget>[
@@ -178,23 +198,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Divider(
                     thickness: 2,
                   ),
-                  InkWell(
-                    onTap: () =>
-                        Navigator.of(context).pushNamed(TabsScreen.routeName),
-                    child: Column(
-                      children: <Widget>[
-                        CircleAvatar(
-                          radius: 30,
-                          backgroundColor: Colors.white,
-                          child: Image.asset('assets\\images\\jona.png'),
-                        ),
-                        Text(
-                          "Ashely Doe",
-                          style: TextStyle(fontSize: 10),
-                        )
-                      ],
-                    ),
-                  ),
+                  MemberList(),
                 ],
               ),
             )

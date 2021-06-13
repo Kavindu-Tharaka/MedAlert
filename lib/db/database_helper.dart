@@ -1,5 +1,6 @@
 import 'package:MedAlert/model/medicine.dart';
 import 'package:MedAlert/model/reminder.dart';
+import '../model/member.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -13,7 +14,7 @@ class MedicineDatabase {
   Future<Database> get database async {
     if (_database != null) return _database;
 
-    _database = await _initDB('medicine.db');
+    _database = await _initDB('newmember1.db');
     return _database;
   }
 
@@ -56,6 +57,19 @@ class MedicineDatabase {
           ${ReminderFields.colIsBefore} BOOLEAN NOT NULL
         )
     ''');
+
+
+        await db.execute('''
+        CREATE TABLE $tableMember ( 
+          ${MemberFields.colId} INTEGER PRIMARY KEY AUTOINCREMENT, 
+          ${MemberFields.colName} TEXT NOT NULL, 
+          ${MemberFields.colEmail} TEXT NOT NULL,
+          ${MemberFields.colWeight} INTEGER NOT NULL,
+          ${MemberFields.colAge} INTEGER NOT NULL
+        )
+    ''');
+
+
   }
 
   //Medicine CRUDS - Start
@@ -182,6 +196,62 @@ class MedicineDatabase {
         'DELETE FROM $tableReminder WHERE ${ReminderFields.colMedicineId} = $id');
   }
   //Reminder CRUDS - End
+
+
+  //Member CRUD start 
+Future<Member> createMember(Member member) async {
+   print("Came Here **********************************" +  member.name);
+    final db = await instance.database;
+    final id = await db.insert(tableMember, member.toJson());
+    return member.copy(id: id);
+  }
+
+  Future<Member> readMember(int id) async {
+    final db = await instance.database;
+
+    final maps = await db.query(
+      tableMember,
+      columns: MemberFields.values,
+      where: '${MemberFields.colId} = ?',
+      whereArgs: [id],
+    );
+
+    if (maps.isNotEmpty) {
+      return Member.fromJson(maps.first);
+    } else {
+      throw Exception('ID $id not found');
+    }
+  }
+
+  Future<List<Member>> readAllMembers() async {
+    print('In all read function ');
+    final db = await instance.database;
+
+    final result = await db.rawQuery('SELECT * FROM $tableMember');
+    
+    return result.map((json) => Member.fromJson(json)).toList();
+  }
+
+  Future<int> updateMember(Member member) async {
+   
+    final db = await instance.database;
+
+    return db.update(
+      tableMember,
+      member.toJson(),
+      where: '${MemberFields.colId} = ?',
+      whereArgs: [member.id],
+    );
+  }
+
+  Future<void> deleteMember(int id) async {
+    final db = await instance.database;
+
+    await db.rawDelete(
+        'DELETE FROM $tableMember WHERE ${MemberFields.colId} = $id');
+  }
+
+  //Member CRUD Ends
 
   Future close() async {
     final db = await instance.database;
