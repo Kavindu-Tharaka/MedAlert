@@ -1,5 +1,5 @@
-import 'package:MedAlert/db/reports_database.dart';
-import 'package:MedAlert/model/sugar_report_database.dart';
+import 'package:MedAlert/db/database_helper.dart';
+import 'package:MedAlert/model/report.dart';
 import 'package:MedAlert/screens/report_screens/sugar_report_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +18,7 @@ class _ReportScreenState extends State<ReportScreen> {
   }
 
   refresReports() async {
-    this.sugar = await ReportDatabase.instance.readAllSugar();
+    this.sugar = await MedicineDatabase.instance.readAllSugar();//ReportDatabse
   }
 
   @override

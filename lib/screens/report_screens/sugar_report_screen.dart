@@ -1,5 +1,5 @@
-import 'package:MedAlert/db/reports_database.dart';
-import 'package:MedAlert/model/sugar_report_database.dart';
+import 'package:MedAlert/db/database_helper.dart';
+import 'package:MedAlert/model/report.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -32,7 +32,7 @@ class _SugarReportScreenState extends State<SugarReportScreen> {
 
   Future _updateSugarReports() async {
     setState(() => isLoading = true);
-    this.sugarList = await ReportDatabase.instance.readAllSugar();
+    this.sugarList = await MedicineDatabase.instance.readAllSugar();
     setState(() => isLoading = false);
   }
 
@@ -51,7 +51,7 @@ class _SugarReportScreenState extends State<SugarReportScreen> {
               icon: const Icon(Icons.delete),
               color: Theme.of(context).accentColor,
               onPressed: () {
-                ReportDatabase.instance.delete(sugarItem.id);
+                MedicineDatabase.instance.delete(sugarItem.id);
                 _updateSugarReports();
               },
             ),

@@ -1,7 +1,8 @@
-import 'package:MedAlert/model/sugar_report_database.dart';
+import 'package:MedAlert/db/database_helper.dart';
+import 'package:MedAlert/model/report.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:MedAlert/db/reports_database.dart';
+
 
 class AddSugarReportScreen extends StatefulWidget {
   final Sugar sugar;
@@ -72,14 +73,14 @@ class _AddSugarReportScreenState extends State<AddSugarReportScreen> {
 
       //insert
       if (widget.sugar == null) {
-        await ReportDatabase.instance.create(sugar);
+        await MedicineDatabase.instance.create(sugar);
       } else {
         //update
         final updatedSugar = widget.sugar.copy(
             sugarLevelF: _sugarLevelF,
             sugarLevelPP: _sugarLevelPP,
             reportDate: _date);
-        await ReportDatabase.instance.update(updatedSugar);
+        await MedicineDatabase.instance.update(updatedSugar);
       }
       //refresh screen
       widget.updateSugarReports();
