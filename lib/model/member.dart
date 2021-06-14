@@ -7,6 +7,7 @@ class MemberFields {
     colEmail,
     colAge,
     colWeight,
+    colMe
      
   ];
 
@@ -15,6 +16,7 @@ class MemberFields {
   static final String colEmail = 'email';
   static final String colAge = 'memberAge';
   static final String colWeight = 'memberWeight';
+  static final String colMe = 'memberMe';
  
 }
 
@@ -24,6 +26,7 @@ class Member {
   final String email;
   final int memberAge;
   final int  weight;
+  final bool me;
  
 
   const Member({
@@ -32,6 +35,7 @@ class Member {
     this.email,
     this.memberAge,
     this.weight,
+    this.me
  
   });
 
@@ -41,6 +45,7 @@ class Member {
     String email,
     int memberAge,
     int  weight,
+    bool me
     
   }) =>
       Member(
@@ -49,6 +54,8 @@ class Member {
         email: email ?? this.email,
         memberAge: memberAge ?? this.memberAge,
         weight: weight ?? this.weight,
+        me: me ?? this.me,
+
  
       );
 
@@ -58,6 +65,8 @@ class Member {
         email: json[MemberFields.colEmail] as String,
         memberAge: json[MemberFields.colAge] as int,
         weight: json[MemberFields.colWeight] as int,
+        me: json[MemberFields.colMe] as bool,
+
  
       );
 
@@ -67,6 +76,8 @@ class Member {
         MemberFields.colEmail: email,
         MemberFields.colAge: memberAge,
         MemberFields.colWeight: weight,
+        MemberFields.colMe: me,
+
  
       };
 }

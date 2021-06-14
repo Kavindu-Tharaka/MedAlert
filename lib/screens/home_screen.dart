@@ -20,6 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Reminder> reminders;
   List<Reminder> todayRemindersList = [];
   bool isLoading = false;
+  Member member ;
 
 
   @override
@@ -99,7 +100,18 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
 
- 
+Future adminMember() async {
+    this.member = await MedicineDatabase.instance.adminMember();
+    setState(()   => {
+          isLoading = true,
+        });
+
+    print(this.member);
+     
+
+    setState(() => isLoading = false);
+  }
+
 
   @override
   Widget build(BuildContext context) {

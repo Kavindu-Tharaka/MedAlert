@@ -14,17 +14,7 @@ class _MemberListState extends State<MemberList> {
   bool isLoading = false;
   List<Member> members = [];
 
-  final memberList = [
-    {'id': '1', 'name': 'Saman', 'age': '30', 'weight': '24'},
-    {'id': '1', 'name': 'Saman', 'age': '30', 'weight': '24'},
-    {'id': '1', 'name': 'Saman', 'age': '30', 'weight': '24'},
-    {'id': '1', 'name': 'Saman', 'age': '30', 'weight': '24'},
-    {'id': '1', 'name': 'Saman', 'age': '30', 'weight': '24'},
-    {'id': '1', 'name': 'Saman', 'age': '30', 'weight': '24'},
-    {'id': '1', 'name': 'Saman', 'age': '30', 'weight': '24'},
-    {'id': '1', 'name': 'Saman', 'age': '30', 'weight': '24'},
-    {'id': '1', 'name': 'Saman', 'age': '30', 'weight': '24'},
-  ];
+ 
 
   @override
   void initState() {
@@ -34,12 +24,14 @@ class _MemberListState extends State<MemberList> {
   }
 
   Future getAllMembers() async {
-    print('here');
-    setState(() => isLoading = true);
     this.members = await MedicineDatabase.instance.readAllMembers();
+    setState(() => {
+          isLoading = true,
+        });
+
     print(this.members);
-    this.members.map((e) => print(e.name));
-    
+    this.members.map((e) => print(e));
+
     setState(() => isLoading = false);
   }
 
@@ -47,30 +39,33 @@ class _MemberListState extends State<MemberList> {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(top: 20),
-      child: SingleChildScrollView(
-        child: this.memberList.length <= 0
-            ? Center(
-                child: Image.asset(
-                  'assets\\images\\no_member.png',
-                  height: 175,
-                ),
-              )
-            : Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  SizedBox(
-                    height: 120.0,
-                    child: ListView(
-                      physics: ClampingScrollPhysics(),
-                      scrollDirection: Axis.horizontal,
-                      children: this
-                          .members
-                          .map((member) => MemberProfile(member))
-                          .toList(),
-                    ),
+      child: RefreshIndicator(
+        onRefresh: getAllMembers,
+        child: SingleChildScrollView(
+          child: isLoading  ? CircularProgressIndicator() :  this.members.isEmpty
+              ? Center(
+                  child: Image.asset(
+                    'assets\\images\\no_member.png',
+                    height: 175,
                   ),
-                ],
-              ),
+                )
+              : Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    SizedBox(
+                      height: 120.0,
+                      child: ListView(
+                        physics: ClampingScrollPhysics(),
+                        scrollDirection: Axis.horizontal,
+                        children: this
+                            .members
+                            .map((member) => MemberProfile(member))
+                            .toList(),
+                      ),
+                    ),
+                  ],
+                ),
+        ),
       ),
     );
   }

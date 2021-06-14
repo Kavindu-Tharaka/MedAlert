@@ -14,7 +14,7 @@ class MedicineDatabase {
   Future<Database> get database async {
     if (_database != null) return _database;
 
-    _database = await _initDB('newmember1.db');
+    _database = await _initDB('newmember3.db');
     return _database;
   }
 
@@ -65,7 +65,8 @@ class MedicineDatabase {
           ${MemberFields.colName} TEXT NOT NULL, 
           ${MemberFields.colEmail} TEXT NOT NULL,
           ${MemberFields.colWeight} INTEGER NOT NULL,
-          ${MemberFields.colAge} INTEGER NOT NULL
+          ${MemberFields.colAge} INTEGER NOT NULL,
+          ${MemberFields.colMe} BOOLEAN DEFAULT FALSE NOT NULL 
         )
     ''');
 
@@ -206,6 +207,13 @@ Future<Member> createMember(Member member) async {
     return member.copy(id: id);
   }
 
+  Future<Member> createAdminMember(Member member) async {
+   print("Came Here **********************************" +  member.name);
+    final db = await instance.database;
+    final id = await db.insert(tableMember, member.toJson());
+    return member.copy(id: id);
+  }
+
   Future<Member> readMember(int id) async {
     final db = await instance.database;
 
@@ -222,6 +230,27 @@ Future<Member> createMember(Member member) async {
       throw Exception('ID $id not found');
     }
   }
+
+    Future<Member> adminMember( ) async {
+    final db = await instance.database;
+
+    final maps = await db.query(
+      tableMember,
+      columns: MemberFields.values,
+      where: '${MemberFields.colMe} = ?',
+      whereArgs: [true],
+    );
+
+    if (maps.isNotEmpty) {
+      return Member.fromJson(maps.first);
+    } else {
+      throw Exception('ID  not found');
+    }
+  }
+
+
+
+
 
   Future<List<Member>> readAllMembers() async {
     print('In all read function ');

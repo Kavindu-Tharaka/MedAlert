@@ -25,12 +25,12 @@ class _NewMemberScreenState extends State<NewMemberScreen> {
         name: memberName.text,
         email: memberEmail.text,
         memberAge: int.parse(memberAge.text),
-        weight: int.parse(memberWeight.text));
+        weight: int.parse(memberWeight.text),
+        me : false
+        );
 
     await MedicineDatabase.instance.createMember(mbr);
-    final r = await MedicineDatabase.instance.readAllMembers();
-   print('in layout');
-    r.map((e) => print(e.name));
+    Navigator.pop(context);
   }
 
 

@@ -1,7 +1,30 @@
+import 'package:MedAlert/db/database_helper.dart';
+
 import  '../screens/home_screen.dart';
 import 'package:flutter/material.dart';
+import '../model/member.dart';
 
 class IntroScreen extends StatelessWidget {
+  TextEditingController getStarted = TextEditingController();
+
+
+  Future introStart(BuildContext context)async{
+     final mbr = Member(
+       name: getStarted.text,
+        email:'',
+        memberAge: 0,
+        weight: 0,
+        me: true
+        
+        );
+        
+        
+
+    await MedicineDatabase.instance.createAdminMember(mbr);
+     Navigator.of(context).pushNamed(HomeScreen.routeName);
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -22,6 +45,7 @@ class IntroScreen extends StatelessWidget {
                   child: Column(
                     children: <Widget>[
                       TextFormField(
+                        controller: getStarted,
                         decoration: InputDecoration(
                             hintText: "Name",
                             border: OutlineInputBorder(
@@ -46,7 +70,9 @@ class IntroScreen extends StatelessWidget {
                                         borderRadius:
                                             BorderRadius.circular(25.0),
                                         side: BorderSide(color: Colors.blue)))),
-                            onPressed: () =>  Navigator.of(context).pushNamed(HomeScreen.routeName),
+                            onPressed: () => {//introStart(context)
+                             Navigator.of(context).pushNamed(HomeScreen.routeName)
+                            },
                             child: Text('Get Started'),
                           )
                         ],
