@@ -16,7 +16,7 @@ class _MemberProfileState extends State<MemberProfile> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.of(context).pushNamed(TabsScreen.routeName),
+      onTap: () => Navigator.of(context).pushNamed(TabsScreen.routeName, arguments: widget.member),
       onLongPress: () => showDialog<String>(
         context: context,
         builder: (BuildContext context) => AlertDialog(
