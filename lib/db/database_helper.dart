@@ -59,8 +59,7 @@ class MedicineDatabase {
         )
     ''');
 
-
-        await db.execute('''
+    await db.execute('''
         CREATE TABLE $tableMember ( 
           ${MemberFields.colId} INTEGER PRIMARY KEY AUTOINCREMENT, 
           ${MemberFields.colName} TEXT NOT NULL, 
@@ -70,15 +69,13 @@ class MedicineDatabase {
         )
     ''');
 
-        await db.execute('''
+    await db.execute('''
 CREATE TABLE $tableSugar ( 
   ${SugarFields.id} INTEGER PRIMARY KEY AUTOINCREMENT, 
   ${SugarFields.sugarLevelF} TEXT NOT NULL,
   ${SugarFields.sugarLevelPP} TEXT NOT NULL,
   ${SugarFields.reportDate} TEXT NOT NULL)
 ''');
-
-
   }
 
   //Medicine CRUDS - Start
@@ -206,10 +203,9 @@ CREATE TABLE $tableSugar (
   }
   //Reminder CRUDS - End
 
-
-  //Member CRUD start 
-Future<Member> createMember(Member member) async {
-   print("Came Here **********************************" +  member.name);
+  //Member CRUD start
+  Future<Member> createMember(Member member) async {
+    print("Came Here **********************************" + member.name);
     final db = await instance.database;
     final id = await db.insert(tableMember, member.toJson());
     return member.copy(id: id);
@@ -237,12 +233,11 @@ Future<Member> createMember(Member member) async {
     final db = await instance.database;
 
     final result = await db.rawQuery('SELECT * FROM $tableMember');
-    
+
     return result.map((json) => Member.fromJson(json)).toList();
   }
 
   Future<int> updateMember(Member member) async {
-   
     final db = await instance.database;
 
     return db.update(
@@ -290,7 +285,7 @@ Future<Member> createMember(Member member) async {
     }
   }
 
-    //read multiple records
+  //read multiple records
   Future<List<Sugar>> readAllSugar() async {
     final db = await instance.database;
 
@@ -323,7 +318,7 @@ Future<Member> createMember(Member member) async {
       whereArgs: [id],
     );
   }
-  
+
   //report CRUD ends
 
   Future close() async {

@@ -82,7 +82,7 @@ class _AddSugarReportScreenState extends State<AddSugarReportScreen> {
             reportDate: _date);
         await MedicineDatabase.instance.update(updatedSugar);
       }
-      //refresh screen
+
       widget.updateSugarReports();
       Navigator.pop(context);
     }
