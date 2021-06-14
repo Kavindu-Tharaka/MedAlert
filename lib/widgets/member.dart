@@ -41,7 +41,7 @@ class _MemberProfileState extends State<MemberProfile> {
           CircleAvatar(
             radius: 35,
             backgroundColor: Colors.white,
-            child: Image.network( 'https://ui-avatars.com/api/?size=128&rounded=true&background=4caf50&color=fff&name=' + widget.member.name) ,
+            child: Image.network( 'https://ui-avatars.com/api/?size=128&rounded=true&background=random&color=fff&name=' + widget.member.name) ,
           ),
           SizedBox(
             height: 4,
