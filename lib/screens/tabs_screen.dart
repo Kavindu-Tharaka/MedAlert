@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import './diary_screen.dart';
 import './medication_screen.dart';
 import './report_screen.dart';
-
+import '../model/member.dart';
 class TabsScreen extends StatefulWidget {
   static const routeName = '/tabs-screen';
   @override
@@ -10,6 +10,8 @@ class TabsScreen extends StatefulWidget {
 }
 
 class _TabsScreenState extends State<TabsScreen> {
+ 
+
   int _selectedIndex = 1;
 
   List<Widget> _widgetOptions = <Widget>[
@@ -26,6 +28,8 @@ class _TabsScreenState extends State<TabsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final memberdetails = ModalRoute.of(context).settings.arguments as Member;
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -40,8 +44,8 @@ class _TabsScreenState extends State<TabsScreen> {
         ],
       ),
       // drawer: AppDrawer(),
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
+      body: Center( 
+        child:_widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: Theme(
         data: Theme.of(context).copyWith(
