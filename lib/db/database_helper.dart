@@ -1,6 +1,7 @@
 import 'package:MedAlert/model/medicine.dart';
 import 'package:MedAlert/model/reminder.dart';
 import 'package:MedAlert/model/report.dart';
+import 'package:MedAlert/model/diary.dart';
 import '../model/member.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -15,7 +16,7 @@ class MedicineDatabase {
   Future<Database> get database async {
     if (_database != null) return _database;
 
-    _database = await _initDB('newmember1.db');
+    _database = await _initDB('db_med_alert.db');
     return _database;
   }
 
@@ -70,12 +71,21 @@ class MedicineDatabase {
     ''');
 
     await db.execute('''
-CREATE TABLE $tableSugar ( 
-  ${SugarFields.id} INTEGER PRIMARY KEY AUTOINCREMENT, 
-  ${SugarFields.sugarLevelF} TEXT NOT NULL,
-  ${SugarFields.sugarLevelPP} TEXT NOT NULL,
-  ${SugarFields.reportDate} TEXT NOT NULL)
-''');
+    CREATE TABLE $tableSugar ( 
+      ${SugarFields.id} INTEGER PRIMARY KEY AUTOINCREMENT, 
+      ${SugarFields.sugarLevelF} TEXT NOT NULL,
+      ${SugarFields.sugarLevelPP} TEXT NOT NULL,
+      ${SugarFields.reportDate} TEXT NOT NULL)
+    ''');
+
+    await db.execute('''
+        CREATE TABLE $tableDiary ( 
+          ${DiaryFields.colId} INTEGER PRIMARY KEY AUTOINCREMENT, 
+          ${DiaryFields.colDate} TEXT NOT NULL, 
+          ${DiaryFields.colDiary} TEXT NOT NULL,
+          ${DiaryFields.colRate} INTEGER NOT NULL
+        )
+    ''');
   }
 
   //Medicine CRUDS - Start
