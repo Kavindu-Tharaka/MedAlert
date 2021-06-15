@@ -15,6 +15,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: Icon(null),
         actions: [
           Image.asset(
             'assets\\images\\MedAlert_Logo.png',
@@ -22,7 +23,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      drawer: AppDrawer(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context).pushNamed(NewMemberScreen.routeName);
@@ -65,11 +65,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: <Widget>[
                   Text('My Members',
                       style: TextStyle(
-                          fontWeight: FontWeight.w600, color: Colors.black54,fontSize: 28.0,)),
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black54,
+                        fontSize: 28.0,
+                      )),
                   Divider(
                     thickness: 2,
                   ),
-                  SizedBox(height: 25,),
+                  SizedBox(
+                    height: 25,
+                  ),
                   MemberList(),
                 ],
               ),

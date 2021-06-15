@@ -3,7 +3,6 @@ import 'package:MedAlert/model/report.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-
 class AddSugarReportScreen extends StatefulWidget {
   final Sugar sugar;
 
@@ -272,7 +271,7 @@ class _AddSugarReportScreenState extends State<AddSugarReportScreen> {
 
                       Container(
                         margin: EdgeInsets.symmetric(vertical: 20.0),
-                        height: 60.0,
+                        height: 50.0,
                         width: double.infinity,
                         decoration: BoxDecoration(
                             color: Theme.of(context).primaryColor,
@@ -282,7 +281,7 @@ class _AddSugarReportScreenState extends State<AddSugarReportScreen> {
                               shape: MaterialStateProperty.all<
                                       RoundedRectangleBorder>(
                                   RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(18.0),
+                                borderRadius: BorderRadius.circular(50),
                               )),
                               backgroundColor:
                                   MaterialStateProperty.all(Color(0XFF008bb0))),
