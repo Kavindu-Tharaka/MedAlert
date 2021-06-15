@@ -48,11 +48,13 @@ class _MemberProfileState extends State<MemberProfile> {
                     widget.member.name),
           ),
           SizedBox(
-            height: 4,
+            height: 5,
           ),
           Text(
             widget.member.name,
-            style: TextStyle(fontSize: 10),
+            style: TextStyle(fontSize: 14),
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
           )
         ],
       ),
