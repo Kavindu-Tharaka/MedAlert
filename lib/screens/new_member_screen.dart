@@ -33,9 +33,6 @@ class _NewMemberScreenState extends State<NewMemberScreen> {
     memberEmail.text = "";
     memberWeight.text = "";
     memberAge.text = "";
-    
-
-    
   }
 
   Widget buildMedicineName(controller, label, keyboardType) => TextFormField(
@@ -76,62 +73,81 @@ class _NewMemberScreenState extends State<NewMemberScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("New Member"),
-      ),
-      body: Builder(builder: (context){
-        return SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 35, horizontal: 30),
-          child: Container(
-            child: Column(
-              children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+        appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios),
+            onPressed: () => Navigator.pop(context),
+          ),
+          actions: [
+            Image.asset(
+              'assets\\images\\MedAlert_Logo.png',
+              height: 20,
+            ),
+          ],
+        ),
+        body: Builder(builder: (context) {
+          return SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 35, horizontal: 30),
+              child: Container(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    CircleAvatar(
-                      child: Icon(Icons.add_photo_alternate_rounded),
-                      radius: 50,
+                    Text('Add Member',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          color: Colors.grey[850],
+                          fontSize: 40,
+                        )),
+                    Divider(),
+                    SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        CircleAvatar(
+                          child: Icon(Icons.add_photo_alternate_rounded),
+                          radius: 50,
+                        )
+                      ],
+                    ),
+                    SizedBox(height: 20),
+                    buildMedicineName(
+                        memberName, "Member name", TextInputType.text),
+                    SizedBox(height: 20),
+                    buildMedicineName(
+                        memberEmail, "Email", TextInputType.emailAddress),
+                    SizedBox(height: 20),
+                    buildMedicineName(memberAge, "Age", TextInputType.number),
+                    SizedBox(height: 20),
+                    buildMedicineName(
+                        memberWeight, "Weight", TextInputType.number),
+                    SizedBox(height: 30),
+                    SizedBox(
+                      width: double.infinity,
+                      height: 50,
+                      child: ElevatedButton(
+                          style: ButtonStyle(
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(50.0),
+                            )),
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                                Color(0XFF008bb0)),
+                          ),
+                          onPressed: () {
+                            addNewMember();
+                            SnackBar snck = SnackBar(
+                              content: Text('New Member Added'),
+                            );
+                            Scaffold.of(context).showSnackBar(snck);
+                          },
+                          child: Text('ADD')),
                     )
                   ],
                 ),
-                SizedBox(height: 20),
-                buildMedicineName(
-                    memberName, "Member name", TextInputType.text),
-                SizedBox(height: 20),
-                buildMedicineName(
-                    memberEmail, "Email", TextInputType.emailAddress),
-                SizedBox(height: 20),
-                buildMedicineName(memberAge, "Age", TextInputType.number),
-                SizedBox(height: 20),
-                buildMedicineName(memberWeight, "Weight", TextInputType.number),
-                SizedBox(height: 30),
-                SizedBox(
-                  width: double.infinity,
-                  height: 50,
-                  child: ElevatedButton(
-                      style: ButtonStyle(
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(50.0),
-                        )),
-                        backgroundColor:
-                            MaterialStateProperty.all<Color>(Color(0XFF008bb0)),
-                      ),
-                      onPressed: () {
-                        addNewMember();
-                        SnackBar snck = SnackBar(content: Text('New Member Added'),);
-                        Scaffold.of(context).showSnackBar(snck);
-                      },
-                      child: Text('ADD')),
-                )
-              ],
+              ),
             ),
-          ),
-        ),
-      );
-      })
-    );
+          );
+        }));
   }
 }

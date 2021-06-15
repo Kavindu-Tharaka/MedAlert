@@ -90,22 +90,26 @@ class _AddSugarReportScreenState extends State<AddSugarReportScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios),
+          onPressed: () => Navigator.pop(context),
+        ),
+        actions: [
+          Image.asset(
+            'assets\\images\\MedAlert_Logo.png',
+            height: 20,
+          ),
+        ],
+      ),
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: SingleChildScrollView(
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 40.0, vertical: 80.0),
+            padding: EdgeInsets.symmetric(horizontal: 40.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                GestureDetector(
-                  onTap: () => Navigator.pop(context),
-                  child: Icon(
-                    Icons.arrow_back_ios,
-                    size: 32,
-                    color: Colors.black26,
-                  ),
-                ),
                 SizedBox(height: 20.0),
                 Text(
                   widget.sugar == null
@@ -116,6 +120,7 @@ class _AddSugarReportScreenState extends State<AddSugarReportScreen> {
                       fontSize: 40.0,
                       fontWeight: FontWeight.bold),
                 ),
+                Divider(),
                 SizedBox(
                   height: 10.0,
                 ),

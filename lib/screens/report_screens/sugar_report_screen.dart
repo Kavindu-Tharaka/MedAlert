@@ -76,8 +76,16 @@ class _SugarReportScreenState extends State<SugarReportScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Sugar'),
-
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios),
+            onPressed: () => Navigator.pop(context),
+          ),
+          actions: [
+            Image.asset(
+              'assets\\images\\MedAlert_Logo.png',
+              height: 20,
+            ),
+          ],
         ),
         floatingActionButton: FloatingActionButton(
           backgroundColor: Theme.of(context).accentColor,
@@ -97,7 +105,6 @@ class _SugarReportScreenState extends State<SugarReportScreen> {
                 child: CircularProgressIndicator(),
               )
             : ListView.builder(
-                padding: EdgeInsets.symmetric(vertical: 80.0),
                 itemCount: sugarList.length + 1,
                 itemBuilder: (BuildContext context, int index) {
                   if (index == 0) {
@@ -114,6 +121,7 @@ class _SugarReportScreenState extends State<SugarReportScreen> {
                                 fontSize: 40.0,
                                 fontWeight: FontWeight.bold),
                           ),
+                          Divider(),
                           SizedBox(height: 10.0),
                           Text(
                             '${sugarList.length} total records are available',

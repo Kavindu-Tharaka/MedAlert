@@ -167,8 +167,16 @@ class MyCustomFormState extends State<MyCustomForm> {
     return Form(
       key: _formKey,
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
+          Text('Add Medicine',
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+                color: Colors.grey[850],
+                fontSize: 40,
+              )),
+          Divider(),
+          SizedBox(height: 20),
           buildMedicineName(),
           SizedBox(height: 20),
           buildAmount(),

@@ -43,12 +43,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   Text('Members',
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
-                        color: Colors.black87,
+                        color: Colors.grey[850],
                         fontSize: 40,
                       )),
-                  Divider(
-                    thickness: 1,
-                  ),
+                  Divider(),
                   SizedBox(
                     height: 25,
                   ),
