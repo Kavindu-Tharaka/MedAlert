@@ -35,6 +35,7 @@ class _MemberListState extends State<MemberList> {
         children: <Widget>[
           Container(
             child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
               child: isLoading
                   ? Center(child: CircularProgressIndicator())
                   : this.members.isEmpty
@@ -50,8 +51,9 @@ class _MemberListState extends State<MemberList> {
                             RefreshIndicator(
                               onRefresh: refreshList,
                               child: SizedBox(
-                                height: 350,
+                                height:   MediaQuery.of(context).size.height ,
                                 child: GridView(
+                                  scrollDirection: Axis.vertical,
                                   gridDelegate:
                                       SliverGridDelegateWithMaxCrossAxisExtent(
                                           maxCrossAxisExtent: 200,
@@ -73,14 +75,7 @@ class _MemberListState extends State<MemberList> {
       ); 
   }
 
-// ListView(
-//                             physics: ClampingScrollPhysics(),
-//                             scrollDirection: Axis.horizontal,
-//                             children: this
-//                                 .members
-//                                 .map((member) => MemberProfile(member))
-//                                 .toList(),
-//                           )
+ 
 
   int r = 0;
   add() {
