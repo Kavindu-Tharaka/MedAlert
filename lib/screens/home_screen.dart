@@ -35,29 +35,29 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SingleChildScrollView(
         child: (Column(
           children: <Widget>[
-            Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                    margin: EdgeInsets.symmetric(vertical: 40),
-                    child: Column(
-                      children: <Widget>[
-                        CircleAvatar(
-                          radius: 50,
-                          backgroundColor: Colors.white,
-                          child: Image.asset('assets\\images\\jona.png'),
-                        ),
-                        Container(
-                          margin: EdgeInsets.symmetric(vertical: 15),
-                          child: Text("Ashley"),
-                        )
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            // Container(
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.center,
+            //     children: <Widget>[
+            //       Container(
+            //         margin: EdgeInsets.symmetric(vertical: 40),
+            //         child: Column(
+            //           children: <Widget>[
+            //             CircleAvatar(
+            //               radius: 50,
+            //               backgroundColor: Colors.white,
+            //               child: Image.asset('assets\\images\\jona.png'),
+            //             ),
+            //             Container(
+            //               margin: EdgeInsets.symmetric(vertical: 15),
+            //               child: Text("Ashley"),
+            //             )
+            //           ],
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
               child: Column(
@@ -65,10 +65,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: <Widget>[
                   Text('My Members',
                       style: TextStyle(
-                          fontWeight: FontWeight.w600, color: Colors.black54)),
+                          fontWeight: FontWeight.w600, color: Colors.black54,fontSize: 28.0,)),
                   Divider(
                     thickness: 2,
                   ),
+                  SizedBox(height: 25,),
                   MemberList(),
                 ],
               ),

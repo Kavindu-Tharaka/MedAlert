@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import './screens/new_member_screen.dart';
 import './screens/home_screen.dart';
 import './screens/tabs_screen.dart';
-import './screens/new_member_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:after_layout/after_layout.dart';
 import './screens/intro_screen.dart';
@@ -64,14 +63,17 @@ class SplashState extends State<Splash> with AfterLayoutMixin<Splash> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool _seen = (prefs.getBool('seen') ?? false);
 
-    // if (_seen) {
-    //   Navigator.of(context).pushReplacement(
-    //       new MaterialPageRoute(builder: (context) => HomeScreen()));
-    // } else {
-    // await prefs.setBool('seen', true);
     Navigator.of(context).pushReplacement(
         new MaterialPageRoute(builder: (context) => IntroScreen()));
-    // }
+
+    if (_seen) {
+      Navigator.of(context).pushReplacement(
+          new MaterialPageRoute(builder: (context) => HomeScreen()));
+    } else {
+      await prefs.setBool('seen', true);
+      Navigator.of(context).pushReplacement(
+          new MaterialPageRoute(builder: (context) => IntroScreen()));
+    }
   }
 
   @override

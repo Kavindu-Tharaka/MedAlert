@@ -28,14 +28,15 @@ class _NewMemberScreenState extends State<NewMemberScreen> {
         weight: int.parse(memberWeight.text));
 
     await MedicineDatabase.instance.createMember(mbr);
-    final r = await MedicineDatabase.instance.readAllMembers();
-   print('in layout');
-    r.map((e) => print(e.name));
+
+    memberName.text = "";
+    memberEmail.text = "";
+    memberWeight.text = "";
+    memberAge.text = "";
+    
+
+    
   }
-
-
-  
-
 
   Widget buildMedicineName(controller, label, keyboardType) => TextFormField(
         onEditingComplete: () {
@@ -78,7 +79,8 @@ class _NewMemberScreenState extends State<NewMemberScreen> {
       appBar: AppBar(
         title: Text("New Member"),
       ),
-      body: SingleChildScrollView(
+      body: Builder(builder: (context){
+        return SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 35, horizontal: 30),
           child: Container(
@@ -118,6 +120,8 @@ class _NewMemberScreenState extends State<NewMemberScreen> {
                       ),
                       onPressed: () {
                         addNewMember();
+                        SnackBar snck = SnackBar(content: Text('New Member Added'),);
+                        Scaffold.of(context).showSnackBar(snck);
                       },
                       child: Text('ADD')),
                 )
@@ -125,7 +129,8 @@ class _NewMemberScreenState extends State<NewMemberScreen> {
             ),
           ),
         ),
-      ),
+      );
+      })
     );
   }
 }

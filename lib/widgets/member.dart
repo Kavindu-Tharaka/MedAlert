@@ -20,8 +20,8 @@ class _MemberProfileState extends State<MemberProfile> {
       onLongPress: () => showDialog<String>(
         context: context,
         builder: (BuildContext context) => AlertDialog(
-          title: const Text('AlertDialog Title'),
-          content: const Text('AlertDialog description'),
+          title: const Text('Delete Member'),
+          content:  Text("Do you want to delete this member ${widget.member.name}"),
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.pop(context, 'Cancel'),
@@ -29,6 +29,7 @@ class _MemberProfileState extends State<MemberProfile> {
             ),
             TextButton(
               onPressed: () async=>  {await  MedicineDatabase.instance.deleteMember(widget.member.id),
+              
               Navigator.pop(context, "Delete")
               },
               child: const Text('Delete'),
@@ -39,9 +40,9 @@ class _MemberProfileState extends State<MemberProfile> {
       child: Column(
         children: <Widget>[
           CircleAvatar(
-            radius: 35,
+            radius: 50,
             backgroundColor: Colors.white,
-            child: Image.network( 'https://ui-avatars.com/api/?size=128&rounded=true&background=4caf50&color=fff&name=' + widget.member.name) ,
+            child: Image.network( 'https://ui-avatars.com/api/?size=128&rounded=true&background=random&color=fff&name=' + widget.member.name) ,
           ),
           SizedBox(
             height: 4,
