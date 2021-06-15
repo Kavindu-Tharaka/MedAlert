@@ -31,51 +31,49 @@ class _MemberListState extends State<MemberList> {
 
   @override
   Widget build(BuildContext context) {
-    return  Column(
-        children: <Widget>[
-          Container(
-            child: SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              child: isLoading
-                  ? Center(child: CircularProgressIndicator())
-                  : this.members.isEmpty
-                      ? Center(
-                          child: Image.asset(
-                            'assets\\images\\no_member.png',
-                            height: 175,
-                          ),
-                        )
-                      : Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            RefreshIndicator(
-                              onRefresh: refreshList,
-                              child: SizedBox(
-                                height:   MediaQuery.of(context).size.height ,
-                                child: GridView(
-                                  scrollDirection: Axis.vertical,
-                                  gridDelegate:
-                                      SliverGridDelegateWithMaxCrossAxisExtent(
-                                          maxCrossAxisExtent: 200,
-                                          childAspectRatio: 3 / 2,
-                                          crossAxisSpacing: 5,
-                                          mainAxisSpacing: 20),
-                                  children: this
-                                      .members
-                                      .map((member) => MemberProfile(member))
-                                      .toList(),
-                                ),
+    return Column(
+      children: <Widget>[
+        Container(
+          child: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: isLoading
+                ? Center(child: CircularProgressIndicator())
+                : this.members.isEmpty
+                    ? Center(
+                        child: Image.asset(
+                          'assets\\images\\no_member.png',
+                          height: 175,
+                        ),
+                      )
+                    : Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          RefreshIndicator(
+                            onRefresh: refreshList,
+                            child: SizedBox(
+                              height: MediaQuery.of(context).size.height,
+                              child: GridView(
+                                scrollDirection: Axis.vertical,
+                                gridDelegate:
+                                    SliverGridDelegateWithMaxCrossAxisExtent(
+                                        maxCrossAxisExtent: 200,
+                                        childAspectRatio: 3 / 2,
+                                        crossAxisSpacing: 1,
+                                        mainAxisSpacing: 20),
+                                children: this
+                                    .members
+                                    .map((member) => MemberProfile(member))
+                                    .toList(),
                               ),
                             ),
-                          ],
-                        ),
-            ),
-          )
-        ],
-      ); 
+                          ),
+                        ],
+                      ),
+          ),
+        )
+      ],
+    );
   }
-
- 
 
   int r = 0;
   add() {
