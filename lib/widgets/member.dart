@@ -40,16 +40,18 @@ class _MemberProfileState extends State<MemberProfile> {
       child: Column(
         children: <Widget>[
           CircleAvatar(
-            radius: 50,
+            radius: 45,
             backgroundColor: Colors.white,
             child: Image.network( 'https://ui-avatars.com/api/?size=128&rounded=true&background=random&color=fff&name=' + widget.member.name) ,
           ),
           SizedBox(
-            height: 4,
+            height: 5,
           ),
           Text(
             widget.member.name,
-            style: TextStyle(fontSize: 10),
+            style: TextStyle(fontSize: 14),
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
           )
         ],
       ),

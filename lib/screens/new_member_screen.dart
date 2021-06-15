@@ -105,15 +105,16 @@ class _NewMemberScreenState extends State<NewMemberScreen> {
                 buildMedicineName(memberAge, "Age", TextInputType.number),
                 SizedBox(height: 20),
                 buildMedicineName(memberWeight, "Weight", TextInputType.number),
-                SizedBox(height: 20),
+                SizedBox(height: 30),
                 SizedBox(
-                  width: 150,
+                  width: double.infinity,
+                  height: 50,
                   child: ElevatedButton(
                       style: ButtonStyle(
                         shape:
                             MaterialStateProperty.all<RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18.0),
+                          borderRadius: BorderRadius.circular(50.0),
                         )),
                         backgroundColor:
                             MaterialStateProperty.all<Color>(Color(0XFF008bb0)),
