@@ -3,6 +3,7 @@ import './diary_screen.dart';
 import './medication_screen.dart';
 import './report_screen.dart';
 import '../model/member.dart';
+
 class TabsScreen extends StatefulWidget {
   static const routeName = '/tabs-screen';
   @override
@@ -10,8 +11,6 @@ class TabsScreen extends StatefulWidget {
 }
 
 class _TabsScreenState extends State<TabsScreen> {
- 
-
   int _selectedIndex = 1;
 
   List<Widget> _widgetOptions = <Widget>[
@@ -44,8 +43,8 @@ class _TabsScreenState extends State<TabsScreen> {
         ],
       ),
       // drawer: AppDrawer(),
-      body: Center( 
-        child:_widgetOptions.elementAt(_selectedIndex),
+      body: Center(
+        child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: Theme(
         data: Theme.of(context).copyWith(
@@ -54,15 +53,15 @@ class _TabsScreenState extends State<TabsScreen> {
         child: BottomNavigationBar(
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              icon: Icon(Icons.add_chart),
+              icon: Icon(Icons.menu_book_rounded),
               title: Text('Diary'),
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.developer_board_sharp),
+              icon: Icon(Icons.medication),
               title: Text('Medication'),
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.home),
+              icon: Icon(Icons.library_books_outlined),
               title: Text('Report'),
             ),
           ],
