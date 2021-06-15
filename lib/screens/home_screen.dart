@@ -1,12 +1,6 @@
-import 'package:MedAlert/model/member.dart';
-import 'package:MedAlert/widgets/member.dart';
 import 'package:MedAlert/widgets/member_list.dart';
-import 'package:MedAlert/db/database_helper.dart';
-import 'package:MedAlert/model/reminder.dart';
-import 'package:MedAlert/screens/reminders_tab_screen.dart';
 import 'package:flutter/material.dart';
 import '../widgets/drawer.dart';
-import './tabs_screen.dart';
 import './new_member_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -17,7 +11,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
