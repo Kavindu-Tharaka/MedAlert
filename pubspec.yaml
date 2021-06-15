@@ -80,6 +80,7 @@ flutter:
     - assets\images\no_medicines.png
     - assets\images\no_notifications.png
     - assets\images\no_member.png
+    - assets\images\splash.gif
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

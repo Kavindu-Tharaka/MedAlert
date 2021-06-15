@@ -33,14 +33,19 @@ class MyApp extends StatelessWidget {
                   fontFamily: 'RobotoCondensed',
                   fontWeight: FontWeight.bold))),
       home: AnimatedSplashScreen(
-        splash: Image.asset('assets\\images\\WelcomeScreanImage.png', fit: BoxFit.contain,height: double.infinity,width: double.infinity,),
-        nextScreen:Splash(),
+        splash: Image.asset(
+          'assets\\images\\WelcomeScreanImage.png',
+          fit: BoxFit.contain,
+          height: double.infinity,
+          width: double.infinity,
+        ),
+        nextScreen: Splash(),
         splashTransition: SplashTransition.fadeTransition,
         backgroundColor: Colors.white,
         duration: 3500,
       ),
       routes: {
-        HomeScreen.routeName : (ctx) => HomeScreen(),
+        HomeScreen.routeName: (ctx) => HomeScreen(),
         TabsScreen.routeName: (ctx) => TabsScreen(),
         NewMemberScreen.routeName: (ctx) => NewMemberScreen(),
         MedicineUpdatePage.routeName: (ctx) => MedicineUpdatePage()
@@ -63,9 +68,9 @@ class SplashState extends State<Splash> with AfterLayoutMixin<Splash> {
     //   Navigator.of(context).pushReplacement(
     //       new MaterialPageRoute(builder: (context) => HomeScreen()));
     // } else {
-      // await prefs.setBool('seen', true);
-      Navigator.of(context).pushReplacement(
-          new MaterialPageRoute(builder: (context) => IntroScreen()));
+    // await prefs.setBool('seen', true);
+    Navigator.of(context).pushReplacement(
+        new MaterialPageRoute(builder: (context) => IntroScreen()));
     // }
   }
 
@@ -74,11 +79,10 @@ class SplashState extends State<Splash> with AfterLayoutMixin<Splash> {
 
   @override
   Widget build(BuildContext context) {
-   
     return new Scaffold(
       body: new Center(
-        child:Image.asset(
-          'assets\\images\\spash.gif',
+        child: Image.asset(
+          'assets\\images\\splash.gif',
           fit: BoxFit.cover,
           height: double.infinity,
           width: double.infinity,
