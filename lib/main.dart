@@ -59,14 +59,14 @@ class SplashState extends State<Splash> with AfterLayoutMixin<Splash> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool _seen = (prefs.getBool('seen') ?? false);
 
-    // if (_seen) {
-    //   Navigator.of(context).pushReplacement(
-    //       new MaterialPageRoute(builder: (context) => HomeScreen()));
-    // } else {
-      // await prefs.setBool('seen', true);
+    if (_seen) {
+      Navigator.of(context).pushReplacement(
+          new MaterialPageRoute(builder: (context) => HomeScreen()));
+    } else {
+      await prefs.setBool('seen', true);
       Navigator.of(context).pushReplacement(
           new MaterialPageRoute(builder: (context) => IntroScreen()));
-    // }
+    }
   }
 
   @override
@@ -78,7 +78,7 @@ class SplashState extends State<Splash> with AfterLayoutMixin<Splash> {
     return new Scaffold(
       body: new Center(
         child:Image.asset(
-          'assets\\images\\spash.gif',
+          'assets\\images\\splash.gif',
           fit: BoxFit.cover,
           height: double.infinity,
           width: double.infinity,

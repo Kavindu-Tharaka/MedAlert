@@ -72,10 +72,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: <Widget>[
                   Text('My Members',
                       style: TextStyle(
-                          fontWeight: FontWeight.w600, color: Colors.black54)),
+                          fontWeight: FontWeight.w600, color: Colors.black54,fontSize: 28.0,)),
                   Divider(
                     thickness: 2,
                   ),
+                  SizedBox(height: 25,),
                   MemberList(),
                 ],
               ),
