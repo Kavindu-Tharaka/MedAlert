@@ -31,41 +31,56 @@ class _MemberListState extends State<MemberList> {
 
   @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(
-      onRefresh: refreshList,
-      child: Column(
+    return  Column(
         children: <Widget>[
           Container(
             child: SingleChildScrollView(
-              child: isLoading ? Center(child: CircularProgressIndicator()) : this.members.isEmpty
-                  ? Center(
-                      child: Image.asset(
-                        'assets\\images\\no_member.png',
-                        height: 175,
-                      ),
-                    )
-                  : Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        SizedBox(
-                          height: 120.0,
-                          child: ListView(
-                            physics: ClampingScrollPhysics(),
-                            scrollDirection: Axis.horizontal,
-                            children: this
-                                .members
-                                .map((member) => MemberProfile(member))
-                                .toList(),
+              child: isLoading
+                  ? Center(child: CircularProgressIndicator())
+                  : this.members.isEmpty
+                      ? Center(
+                          child: Image.asset(
+                            'assets\\images\\no_member.png',
+                            height: 175,
                           ),
+                        )
+                      : Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            RefreshIndicator(
+                              onRefresh: refreshList,
+                              child: SizedBox(
+                                height: 350,
+                                child: GridView(
+                                  gridDelegate:
+                                      SliverGridDelegateWithMaxCrossAxisExtent(
+                                          maxCrossAxisExtent: 200,
+                                          childAspectRatio: 3 / 2,
+                                          crossAxisSpacing: 5,
+                                          mainAxisSpacing: 20),
+                                  children: this
+                                      .members
+                                      .map((member) => MemberProfile(member))
+                                      .toList(),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
             ),
           )
         ],
-      ),
-    );
+      ); 
   }
+
+// ListView(
+//                             physics: ClampingScrollPhysics(),
+//                             scrollDirection: Axis.horizontal,
+//                             children: this
+//                                 .members
+//                                 .map((member) => MemberProfile(member))
+//                                 .toList(),
+//                           )
 
   int r = 0;
   add() {
