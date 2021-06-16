@@ -64,6 +64,58 @@ class _DiaryTabScreenState extends State<DiaryTabScreen> {
   }
 }
 
+// class DiaryTile extends StatelessWidget {
+//   final Diary diary;
+//   final refreshMethod;
+
+//   DiaryTile(this.diary, this.refreshMethod);
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return InkWell(
+//       onLongPress: () => showDialog<String>(
+//         context: context,
+//         builder: (BuildContext context) => AlertDialog(
+//           title: const Text('Delete Member'),
+//           content: Text("Do you want to delete this record"),
+//           actions: <Widget>[
+//             TextButton(
+//               onPressed: () => Navigator.pop(context, 'Cancel'),
+//               child: const Text('Cancel'),
+//             ),
+//             TextButton(
+//               onPressed: () async => {
+//                 await MedicineDatabase.instance.deleteDiary(diary.id),
+//                 refreshMethod(),
+//                 Navigator.pop(context, "Delete")
+//               },
+//               child: const Text('Delete'),
+//             ),
+//           ],
+//         ),
+//       ),
+//       child: Card(
+//           child: Column(
+//         children: [
+//           Text(
+//             diary.date,
+//             textAlign: TextAlign.left,
+//             style: TextStyle(
+//                 color: Colors.black,
+//                 fontSize: 20.0,
+//                 fontWeight: FontWeight.normal),
+//           ),
+//           Text(diary.diary,
+//               style: TextStyle(
+//                   color: Colors.black,
+//                   fontSize: 12.0,
+//                   fontWeight: FontWeight.normal))
+//         ],
+//       )),
+//     );
+//   }
+// }
+
 class DiaryTile extends StatelessWidget {
   final Diary diary;
   final refreshMethod;
@@ -76,7 +128,7 @@ class DiaryTile extends StatelessWidget {
       onLongPress: () => showDialog<String>(
         context: context,
         builder: (BuildContext context) => AlertDialog(
-          title: const Text('Delete Member'),
+          title: const Text('Delete Record'),
           content: Text("Do you want to delete this record"),
           actions: <Widget>[
             TextButton(
@@ -95,18 +147,58 @@ class DiaryTile extends StatelessWidget {
         ),
       ),
       child: Card(
-        child: InkWell(
-          splashColor: Colors.blue.withAlpha(30),
-          onTap: () {
-            print('Card tapped.');
-          },
-          child: SizedBox(
-            width: 300,
-            height: 100,
-            child: Text(diary.diary),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.0),
           ),
-        ),
-      ),
+          child: Row(
+            children: [
+              Expanded(
+                flex: 3,
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(12),
+                      bottomLeft: Radius.circular(12),
+                    ),
+                    color: Color(0XFF008bb0),
+                  ),
+                  height: 150,
+                ),
+              ),
+              Expanded(
+                  flex: 97,
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          diary.date.split(' ')[0],
+                          style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: 'RobotoCondensed-Bold'),
+                        ),
+                        Text(
+                          diary.date.split(' ')[1].split('.')[0],
+                          style: TextStyle(fontSize: 12),
+                        ),
+                        Divider(),
+                        Container(
+                          height: 75,
+                          child: Text(
+                            diary.diary,
+                            style:
+                                TextStyle(color: Colors.black54, fontSize: 14),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 4,
+                          ),
+                        )
+                      ],
+                    ),
+                  )),
+            ],
+          )),
     );
   }
 }
