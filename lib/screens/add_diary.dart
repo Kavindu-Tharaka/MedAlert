@@ -1,11 +1,10 @@
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:rating_bar/rating_bar.dart';
 import 'package:MedAlert/db/database_helper.dart';
 import 'package:MedAlert/model/diary.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class AddDiary extends StatefulWidget {
-  
   final Diary diary;
 
   const AddDiary({
@@ -18,6 +17,16 @@ class AddDiary extends StatefulWidget {
 }
 
 class _AddDiaryState extends State<AddDiary> {
+  double _ratingSmile = 1;
+  var _ratingStatuses = [
+    'Bad',
+    'Not Bad',
+    'Normal',
+    'Quit Good',
+    'Awesome',
+  ];
+  String _ratingStatus;
+
   final snackBar = SnackBar(content: Text('New Entry Added'));
 
   final _formKey = GlobalKey<FormState>();
@@ -27,17 +36,31 @@ class _AddDiaryState extends State<AddDiary> {
 
   final DateFormat _dateFormatter = DateFormat('MM dd, yyyy');
 
-  Future addNewEntry() async {
-    final diary = Diary(
-        date: _date.toString(), rate: int.parse('1'), diary: _description);
+  Future _addNewEntry() async {
+    if (_formKey.currentState.validate()) {
+      final diary = Diary(
+          date: _date.toString(),
+          rate: _ratingSmile.toInt(),
+          diary: _description);
 
-    await MedicineDatabase.instance.creatDiary(diary);
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      await MedicineDatabase.instance.creatDiary(diary);
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      Navigator.pop(context);
+    }
+  }
+
+  void _changeRating(rating) {
+    setState(() => {
+          _ratingSmile = rating,
+          _ratingStatus = _ratingStatuses.elementAt(_ratingSmile.toInt() - 1),
+        });
   }
 
   @override
   void initState() {
     super.initState();
+    _ratingSmile = 1;
+    _ratingStatus = _ratingStatuses.elementAt(0);
     _dateController.text = _dateFormatter.format(_date);
   }
 
@@ -101,6 +124,31 @@ class _AddDiaryState extends State<AddDiary> {
                     children: <Widget>[
                       Padding(
                         padding: EdgeInsets.symmetric(vertical: 10.0),
+                        child: RatingBar(
+                          onRatingChanged: (rating) => _changeRating(rating),
+                          filledIcon: Icons.sentiment_satisfied,
+                          emptyIcon: Icons.sentiment_dissatisfied,
+                          halfFilledIcon: Icons.sentiment_neutral,
+                          isHalfAllowed: false,
+                          filledColor: Colors.green,
+                          emptyColor: Colors.redAccent,
+                          halfFilledColor: Colors.amberAccent,
+                          size: 60,
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 10.0, bottom: 15.0),
+                        child: Text(
+                          _ratingStatus,
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 14.0,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 10.0),
                         child: TextFormField(
                           autofocus: false,
                           controller: _dateController,
@@ -127,7 +175,7 @@ class _AddDiaryState extends State<AddDiary> {
                           ),
                           validator: (value) {
                             if (value.isEmpty) {
-                              return 'Can not be empty!';
+                              return 'Please select a date';
                             }
                             return null;
                           },
@@ -169,7 +217,7 @@ class _AddDiaryState extends State<AddDiary> {
                           initialValue: _description,
                           validator: (value) {
                             if (value.isEmpty) {
-                              return 'Can not be empty!';
+                              return 'Plese add small description';
                             }
                             return null;
                           },
@@ -197,11 +245,9 @@ class _AddDiaryState extends State<AddDiary> {
                                 TextStyle(color: Colors.white, fontSize: 20.0),
                           ),
                           onPressed: () {
-                            addNewEntry();
+                            _addNewEntry();
                             print('Date $_date');
                             print('Description $_description');
-
-                            Navigator.pop(context);
                           },
                         ),
                       ),

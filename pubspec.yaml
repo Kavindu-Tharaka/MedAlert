@@ -54,7 +54,7 @@ dependencies:
   rxdart: ^0.27.1
   timezone: ^0.7.0
   flutter_native_timezone: ^2.0.0
-  flutter_rating_bar: ^4.0.0
+  rating_bar: ^0.2.0
 
 dev_dependencies:
   flutter_test:
