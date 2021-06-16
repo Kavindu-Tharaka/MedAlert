@@ -64,58 +64,6 @@ class _DiaryTabScreenState extends State<DiaryTabScreen> {
   }
 }
 
-// class DiaryTile extends StatelessWidget {
-//   final Diary diary;
-//   final refreshMethod;
-
-//   DiaryTile(this.diary, this.refreshMethod);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return InkWell(
-//       onLongPress: () => showDialog<String>(
-//         context: context,
-//         builder: (BuildContext context) => AlertDialog(
-//           title: const Text('Delete Member'),
-//           content: Text("Do you want to delete this record"),
-//           actions: <Widget>[
-//             TextButton(
-//               onPressed: () => Navigator.pop(context, 'Cancel'),
-//               child: const Text('Cancel'),
-//             ),
-//             TextButton(
-//               onPressed: () async => {
-//                 await MedicineDatabase.instance.deleteDiary(diary.id),
-//                 refreshMethod(),
-//                 Navigator.pop(context, "Delete")
-//               },
-//               child: const Text('Delete'),
-//             ),
-//           ],
-//         ),
-//       ),
-//       child: Card(
-//           child: Column(
-//         children: [
-//           Text(
-//             diary.date,
-//             textAlign: TextAlign.left,
-//             style: TextStyle(
-//                 color: Colors.black,
-//                 fontSize: 20.0,
-//                 fontWeight: FontWeight.normal),
-//           ),
-//           Text(diary.diary,
-//               style: TextStyle(
-//                   color: Colors.black,
-//                   fontSize: 12.0,
-//                   fontWeight: FontWeight.normal))
-//         ],
-//       )),
-//     );
-//   }
-// }
-
 class DiaryTile extends StatelessWidget {
   final Diary diary;
   final refreshMethod;

@@ -55,6 +55,7 @@ dependencies:
   timezone: ^0.7.0
   flutter_native_timezone: ^2.0.0
   rating_bar: ^0.2.0
+  syncfusion_flutter_charts: ^19.1.69
 
 dev_dependencies:
   flutter_test:
