@@ -54,6 +54,7 @@ dependencies:
   rxdart: ^0.27.1
   timezone: ^0.7.0
   flutter_native_timezone: ^2.0.0
+  flutter_rating_bar: ^4.0.0
 
 dev_dependencies:
   flutter_test:
@@ -78,6 +79,7 @@ flutter:
     - assets\images\logo.png
     - assets\images\MedAlert_Logo.png
     - assets\images\no_medicines.png
+    - assets\images\no_diaries.png
     - assets\images\no_notifications.png
     - assets\images\no_member.png
     - assets\images\splash.gif

@@ -1,16 +1,16 @@
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:MedAlert/db/database_helper.dart';
 import 'package:MedAlert/model/diary.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class AddDiary extends StatefulWidget {
-  final DiaryFields diaryFields;
-
-  final Function updateSugarReports;
+  
+  final Diary diary;
 
   const AddDiary({
-    this.updateSugarReports,
     Key key,
-    this.diaryFields,
+    this.diary,
   }) : super(key: key);
 
   @override
@@ -18,13 +18,22 @@ class AddDiary extends StatefulWidget {
 }
 
 class _AddDiaryState extends State<AddDiary> {
+  final snackBar = SnackBar(content: Text('New Entry Added'));
+
   final _formKey = GlobalKey<FormState>();
-  String _diaryFieldsLevelF = '';
-  String _diaryFieldsLevelPP = '';
   DateTime _date = DateTime.now();
+  String _description = '';
   TextEditingController _dateController = TextEditingController();
 
   final DateFormat _dateFormatter = DateFormat('MM dd, yyyy');
+
+  Future addNewEntry() async {
+    final diary = Diary(
+        date: _date.toString(), rate: int.parse('1'), diary: _description);
+
+    await MedicineDatabase.instance.creatDiary(diary);
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
 
   @override
   void initState() {
@@ -76,14 +85,13 @@ class _AddDiaryState extends State<AddDiary> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  widget.diaryFields == null
-                      ? 'How do you feel today?'
-                      : 'Update Sugar Repport',
+                  'How do you feel today?',
                   style: TextStyle(
                       color: Colors.black,
                       fontSize: 40.0,
                       fontWeight: FontWeight.bold),
                 ),
+                Divider(),
                 SizedBox(
                   height: 10.0,
                 ),
@@ -131,8 +139,10 @@ class _AddDiaryState extends State<AddDiary> {
                           onEditingComplete: () {
                             FocusScope.of(context).nextFocus();
                           },
+                          textInputAction: TextInputAction.unspecified,
                           autofocus: true,
                           maxLines: null,
+                          minLines: 3,
                           keyboardType: TextInputType.text,
                           style: TextStyle(
                             color: Colors.black87,
@@ -140,7 +150,8 @@ class _AddDiaryState extends State<AddDiary> {
                             fontSize: 20,
                           ),
                           decoration: InputDecoration(
-                            contentPadding: const EdgeInsets.all(10.0),
+                            contentPadding: const EdgeInsets.fromLTRB(
+                                10.0, 20.0, 10.0, 20.0),
                             labelText: 'Description',
                             labelStyle: TextStyle(
                               fontSize: 18,
@@ -154,8 +165,8 @@ class _AddDiaryState extends State<AddDiary> {
                             hintText: 'Description',
                             hintStyle: TextStyle(color: Colors.white70),
                           ),
-                          onSaved: (input) => _diaryFieldsLevelF = input,
-                          initialValue: _diaryFieldsLevelF,
+                          onChanged: (value) => _description = value,
+                          initialValue: _description,
                           validator: (value) {
                             if (value.isEmpty) {
                               return 'Can not be empty!';
@@ -181,13 +192,17 @@ class _AddDiaryState extends State<AddDiary> {
                               backgroundColor:
                                   MaterialStateProperty.all(Color(0XFF008bb0))),
                           child: Text(
-                            widget.diaryFields == null
-                                ? 'Add Entry'
-                                : 'Update Diary',
+                            'Add Entry',
                             style:
                                 TextStyle(color: Colors.white, fontSize: 20.0),
                           ),
-                          onPressed: null,
+                          onPressed: () {
+                            addNewEntry();
+                            print('Date $_date');
+                            print('Description $_description');
+
+                            Navigator.pop(context);
+                          },
                         ),
                       ),
                     ],

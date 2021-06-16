@@ -335,4 +335,49 @@ class MedicineDatabase {
     final db = await instance.database;
     db.close();
   }
+
+  // Insert Diary
+  Future<Diary> creatDiary(Diary diary) async {
+    final db = await instance.database;
+    final id = await db.insert(tableDiary, diary.toJson());
+    return diary.copy(id: id);
+  }
+
+  // Read signle entry
+  Future<Diary> readDiary(int id) async {
+    final db = await instance.database;
+
+    final maps = await db.query(
+      tableDiary,
+      columns: DiaryFields.values,
+      where: '${DiaryFields.colId} = ?',
+      whereArgs: [id],
+    );
+
+    if (maps.isNotEmpty) {
+      return Diary.fromJson(maps.first);
+    } else {
+      throw Exception('ID $id not found');
+    }
+  }
+
+  // Read all entieas
+  Future<List<Diary>> readAllDiaries() async {
+    final db = await instance.database;
+    final result = await db.rawQuery('SELECT * FROM $tableDiary');
+
+    result.forEach((element) {
+      print(element);
+    });
+
+    return result.map((json) => Diary.fromJson(json)).toList();
+  }
+
+  // Delete diary
+  Future<int> deleteDiary(int id) async {
+    final db = await instance.database;
+
+    await db
+        .rawDelete('DELETE FROM $tableDiary WHERE ${DiaryFields.colId} = $id');
+  }
 }
