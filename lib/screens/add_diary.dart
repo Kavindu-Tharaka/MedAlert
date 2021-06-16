@@ -19,11 +19,11 @@ class AddDiary extends StatefulWidget {
 class _AddDiaryState extends State<AddDiary> {
   double _ratingSmile = 1;
   var _ratingStatuses = [
-    'Bad',
-    'Not Bad',
-    'Normal',
-    'Quit Good',
-    'Awesome',
+    'Serious',
+    'Bad Condition',
+    'Satisfactory Condition',
+    'Good Condition',
+    'Excellent',
   ];
   String _ratingStatus;
 
